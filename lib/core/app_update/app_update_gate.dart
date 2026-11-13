@@ -54,8 +54,14 @@ class _AppUpdateGateState extends State<AppUpdateGate> with WidgetsBindingObserv
 
   Future<void> _check() async {
     if (_checking) return;
+    final isRetry = _status != null;
     setState(() => _checking = true);
-    final status = await AppUpdateStatus.fetch();
+    // On a retry keep the spinner up briefly so it doesn't flash on and off.
+    final results = await Future.wait<Object?>([
+      AppUpdateStatus.fetch(),
+      if (isRetry) Future<void>.delayed(const Duration(milliseconds: 700)),
+    ]);
+    final status = results.first as AppUpdateStatus?;
     if (!mounted) return;
     setState(() {
       _checking = false;
@@ -72,9 +78,10 @@ class _AppUpdateGateState extends State<AppUpdateGate> with WidgetsBindingObserv
   @override
   Widget build(BuildContext context) {
     final s = _status;
-    Widget? overlay;
+    Widget overlay = const SizedBox.shrink(key: ValueKey('none'));
     if (s != null && s.maintenance) {
       overlay = _BlockingScreen(
+        key: const ValueKey('maintenance'),
         icon: Icons.construction_rounded,
         title: 'Under Maintenance',
         message: s.maintenanceMessage,
@@ -84,6 +91,7 @@ class _AppUpdateGateState extends State<AppUpdateGate> with WidgetsBindingObserv
       );
     } else if (s != null && s.forceUpdate) {
       overlay = _BlockingScreen(
+        key: const ValueKey('force'),
         icon: Icons.system_update_rounded,
         title: 'Update Required',
         message: s.updateMessage,
@@ -91,10 +99,35 @@ class _AppUpdateGateState extends State<AppUpdateGate> with WidgetsBindingObserv
         onPressed: _openStore,
       );
     } else if (s != null && s.updateAvailable && !_softDismissed) {
-      overlay = _UpdateCard(status: s, onUpdate: _openStore, onLater: () => setState(() => _softDismissed = true));
+      overlay = _UpdateCard(
+        key: const ValueKey('card'),
+        status: s,
+        onUpdate: _openStore,
+        onLater: () => setState(() => _softDismissed = true),
+      );
     }
-    if (overlay == null) return widget.child;
-    return Stack(fit: StackFit.expand, children: [widget.child, overlay]);
+    // The Stack is always present so the app below keeps its state when an
+    // overlay comes or goes; the switcher cross-fades between states.
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        widget.child,
+        AnimatedSwitcher(
+          duration: const Duration(milliseconds: 550),
+          reverseDuration: const Duration(milliseconds: 380),
+          switchInCurve: Curves.easeOutCubic,
+          switchOutCurve: Curves.easeInCubic,
+          layoutBuilder: (current, previous) => Stack(fit: StackFit.expand, children: [...previous, ?current]),
+          transitionBuilder: (child, animation) {
+            final fade = FadeTransition(opacity: animation, child: child);
+            // The card animates its own slide; full screens get a soft zoom.
+            if (child.key == const ValueKey('card')) return fade;
+            return ScaleTransition(scale: Tween(begin: 1.03, end: 1.0).animate(animation), child: fade);
+          },
+          child: overlay,
+        ),
+      ],
+    );
   }
 }
 
@@ -110,6 +143,7 @@ const _nightEdge = Color(0xFF220307);
 /// breathing gold halo, and the wordmark in gold.
 class _BlockingScreen extends StatefulWidget {
   const _BlockingScreen({
+    super.key,
     required this.icon,
     required this.title,
     required this.message,
@@ -129,14 +163,47 @@ class _BlockingScreen extends StatefulWidget {
   State<_BlockingScreen> createState() => _BlockingScreenState();
 }
 
-class _BlockingScreenState extends State<_BlockingScreen> with SingleTickerProviderStateMixin {
+class _BlockingScreenState extends State<_BlockingScreen> with TickerProviderStateMixin {
   late final AnimationController _loop = AnimationController(vsync: this, duration: const Duration(seconds: 6))
     ..repeat();
+  late final AnimationController _intro = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 1100),
+  );
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      if (MediaQuery.of(context).disableAnimations) {
+        _intro.value = 1;
+      } else {
+        _intro.forward();
+      }
+    });
+  }
 
   @override
   void dispose() {
     _loop.dispose();
+    _intro.dispose();
     super.dispose();
+  }
+
+  /// Fades [child] in while lifting it slightly, during [begin]..[end] of the intro.
+  Widget _stagger(double begin, double end, Widget child) {
+    final a = CurvedAnimation(
+      parent: _intro,
+      curve: Interval(begin, end, curve: Curves.easeOutCubic),
+    );
+    return FadeTransition(
+      opacity: a,
+      child: SlideTransition(
+        position: Tween(begin: const Offset(0, .18), end: Offset.zero).animate(a),
+        child: child,
+      ),
+    );
   }
 
   @override
@@ -171,43 +238,59 @@ class _BlockingScreenState extends State<_BlockingScreen> with SingleTickerProvi
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            _GlowingEmblem(width: emW, loop: reduceMotion ? null : _loop),
+                            _stagger(0, .5, _GlowingEmblem(width: emW, loop: reduceMotion ? null : _loop)),
                             const SizedBox(height: 28),
-                            SizedBox(
-                              width: wmW,
-                              child: SvgPicture.asset(
-                                'assets/images/splash/wordmark.svg',
-                                colorFilter: const ColorFilter.mode(_gold, BlendMode.srcIn),
+                            _stagger(
+                              .12,
+                              .62,
+                              SizedBox(
+                                width: wmW,
+                                child: SvgPicture.asset(
+                                  'assets/images/splash/wordmark.svg',
+                                  colorFilter: const ColorFilter.mode(_gold, BlendMode.srcIn),
+                                ),
                               ),
                             ),
                             const SizedBox(height: 14),
-                            const _Ornament(),
+                            _stagger(.22, .72, const _Ornament()),
                             const SizedBox(height: 28),
-                            Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Icon(widget.icon, size: 22, color: _gold),
-                                const SizedBox(width: 8),
-                                Flexible(
-                                  child: Text(
-                                    widget.title,
-                                    textAlign: TextAlign.center,
-                                    style: AppText.heading(size: 26, color: _goldPale),
+                            _stagger(
+                              .32,
+                              .82,
+                              Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(widget.icon, size: 22, color: _gold),
+                                  const SizedBox(width: 8),
+                                  Flexible(
+                                    child: Text(
+                                      widget.title,
+                                      textAlign: TextAlign.center,
+                                      style: AppText.heading(size: 26, color: _goldPale),
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                             const SizedBox(height: 12),
-                            Text(
-                              widget.message,
-                              textAlign: TextAlign.center,
-                              style: AppText.body(size: 15, color: _goldPale.withValues(alpha: .75), height: 1.55),
+                            _stagger(
+                              .42,
+                              .92,
+                              Text(
+                                widget.message,
+                                textAlign: TextAlign.center,
+                                style: AppText.body(size: 15, color: _goldPale.withValues(alpha: .75), height: 1.55),
+                              ),
                             ),
                             const SizedBox(height: 32),
-                            _GoldButton(
-                              label: widget.buttonLabel,
-                              loading: widget.loading,
-                              onPressed: widget.onPressed,
+                            _stagger(
+                              .52,
+                              1,
+                              _GoldButton(
+                                label: widget.buttonLabel,
+                                loading: widget.loading,
+                                onPressed: widget.onPressed,
+                              ),
                             ),
                           ],
                         ),
@@ -322,16 +405,21 @@ class _GoldButton extends StatelessWidget {
             height: 50,
             width: double.infinity,
             child: Center(
-              child: loading
-                  ? const SizedBox(
-                      width: 20,
-                      height: 20,
-                      child: CircularProgressIndicator(strokeWidth: 2.2, color: AppColors.maroonDark),
-                    )
-                  : Text(
-                      label,
-                      style: AppText.body(size: 16, weight: FontWeight.w700, color: AppColors.maroonDark),
-                    ),
+              child: AnimatedSwitcher(
+                duration: const Duration(milliseconds: 220),
+                child: loading
+                    ? const SizedBox(
+                        key: ValueKey('spinner'),
+                        width: 20,
+                        height: 20,
+                        child: CircularProgressIndicator(strokeWidth: 2.2, color: AppColors.maroonDark),
+                      )
+                    : Text(
+                        label,
+                        key: ValueKey(label),
+                        style: AppText.body(size: 16, weight: FontWeight.w700, color: AppColors.maroonDark),
+                      ),
+              ),
             ),
           ),
         ),
@@ -376,60 +464,96 @@ class _NightSkyPainter extends CustomPainter {
   bool shouldRepaint(_NightSkyPainter old) => old.t != t;
 }
 
-class _UpdateCard extends StatelessWidget {
-  const _UpdateCard({required this.status, required this.onUpdate, required this.onLater});
+class _UpdateCard extends StatefulWidget {
+  const _UpdateCard({super.key, required this.status, required this.onUpdate, required this.onLater});
 
   final AppUpdateStatus status;
   final VoidCallback onUpdate;
   final VoidCallback onLater;
 
   @override
+  State<_UpdateCard> createState() => _UpdateCardState();
+}
+
+class _UpdateCardState extends State<_UpdateCard> with SingleTickerProviderStateMixin {
+  late final AnimationController _in = AnimationController(vsync: this, duration: const Duration(milliseconds: 520));
+
+  @override
+  void initState() {
+    super.initState();
+    _in.forward();
+  }
+
+  @override
+  void dispose() {
+    _in.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Colors.black54,
+    final status = widget.status;
+    final slide = CurvedAnimation(parent: _in, curve: Curves.easeOutCubic);
+    return AnimatedBuilder(
+      animation: _in,
+      builder: (context, child) => Material(
+        color: Colors.black.withValues(alpha: .54 * Curves.easeOut.transform(_in.value)),
+        child: child,
+      ),
       child: SafeArea(
         child: Align(
           alignment: Alignment.bottomCenter,
-          child: Container(
-            margin: const EdgeInsets.all(16),
-            padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(color: AppColors.card, borderRadius: BorderRadius.circular(16)),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
+          child: SlideTransition(
+            position: Tween(begin: const Offset(0, .35), end: Offset.zero).animate(slide),
+            child: FadeTransition(
+              opacity: slide,
+              child: Container(
+                margin: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(color: AppColors.card, borderRadius: BorderRadius.circular(16)),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Icon(Icons.system_update_rounded, color: AppColors.primary),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: Text(
-                        status.latestVersion.isEmpty
-                            ? 'Update Available'
-                            : 'Update Available (v${status.latestVersion})',
-                        style: AppText.body(size: 17, weight: FontWeight.w700),
-                      ),
+                    Row(
+                      children: [
+                        const Icon(Icons.system_update_rounded, color: AppColors.primary),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: Text(
+                            status.latestVersion.isEmpty
+                                ? 'Update Available'
+                                : 'Update Available (v${status.latestVersion})',
+                            style: AppText.body(size: 17, weight: FontWeight.w700),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      status.updateMessage,
+                      style: AppText.body(size: 14, color: AppColors.mutedForeground, height: 1.5),
+                    ),
+                    const SizedBox(height: 18),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: AppButton(
+                            onPressed: widget.onLater,
+                            label: 'Later',
+                            variant: BtnVariant.outline,
+                            expand: true,
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: AppButton(onPressed: widget.onUpdate, label: 'Update', expand: true),
+                        ),
+                      ],
                     ),
                   ],
                 ),
-                const SizedBox(height: 10),
-                Text(
-                  status.updateMessage,
-                  style: AppText.body(size: 14, color: AppColors.mutedForeground, height: 1.5),
-                ),
-                const SizedBox(height: 18),
-                Row(
-                  children: [
-                    Expanded(
-                      child: AppButton(onPressed: onLater, label: 'Later', variant: BtnVariant.outline, expand: true),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: AppButton(onPressed: onUpdate, label: 'Update', expand: true),
-                    ),
-                  ],
-                ),
-              ],
+              ),
             ),
           ),
         ),
