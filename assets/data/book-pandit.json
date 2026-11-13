@@ -1,0 +1,287 @@
+{
+    "slug": "book-pandit",
+    "pageType": "service",
+    "name": "Book Pandit",
+    "hero": {
+        "heading": "Book Verified Pandit for Pooja at Home",
+        "subHeading": "Get the right pandit for your pooja with proper ritual guidance, preferred language support, samagri assistance, clear package discussion, and complete booking coordination.",
+        "trustHighlights": [
+            "Verified Pandits",
+            "Pooja at Your Home",
+            "Preferred Language Support",
+            "Samagri Guidance",
+            "Clear Package Discussion",
+            "Call & WhatsApp Support"
+        ],
+        "primaryCTA": {
+            "text": "Check Pandit Availability",
+            "action": "check_availability"
+        },
+        "secondaryCTA": {
+            "text": "Get Package Details on WhatsApp",
+            "action": "whatsapp"
+        }
+    },
+    "leadForm": {
+        "heading": "Find the Right Pandit for Your Pooja",
+        "description": "Share your pooja requirement and our coordinator will help you check pandit availability, language preference, package details, samagri requirement, and booking confirmation.",
+        "submitButton": "Get Callback From Pooja Coordinator",
+        "fields": [
+            {
+                "key": "full_name",
+                "label": "Full Name",
+                "type": "text",
+                "required": true
+            },
+            {
+                "key": "phone_number",
+                "label": "Phone Number",
+                "type": "phone",
+                "required": true
+            },
+            {
+                "key": "city",
+                "label": "City",
+                "type": "dropdown",
+                "required": true,
+                "options": [
+                    "Mumbai",
+                    "Pune",
+                    "Bangalore",
+                    "Hyderabad",
+                    "Chennai",
+                    "Delhi NCR",
+                    "Kolkata",
+                    "Ahmedabad",
+                    "Other"
+                ]
+            },
+            {
+                "key": "pooja_location_area",
+                "label": "Pooja Location Area",
+                "type": "text",
+                "required": false
+            },
+            {
+                "key": "pooja_type",
+                "label": "Pooja Type",
+                "type": "dropdown",
+                "required": true,
+                "options": [
+                    "Griha Pravesh Pooja",
+                    "Satyanarayana Pooja",
+                    "Vastu Shanti Pooja",
+                    "Ganapathi Homam",
+                    "Lakshmi Pooja",
+                    "Navagraha Pooja",
+                    "Rudrabhishek Pooja",
+                    "Mahamrityunjaya Jaap",
+                    "Ayush Homam",
+                    "Marriage Rituals",
+                    "Naming Ceremony",
+                    "Business Opening Pooja",
+                    "Other"
+                ]
+            },
+            {
+                "key": "preferred_language",
+                "label": "Preferred Language",
+                "type": "dropdown",
+                "required": true
+            },
+            {
+                "key": "planning",
+                "label": "When Are You Planning the Pooja?",
+                "type": "dropdown",
+                "options": [
+                    "Today",
+                    "Tomorrow",
+                    "Within 3 Days",
+                    "This Week",
+                    "This Month",
+                    "Just Enquiring"
+                ]
+            }
+        ]
+    },
+    "whyChooseUs": {
+        "heading": "Why Families Choose Book My Pooja for Pandit Booking",
+        "items": [
+            {
+                "title": "Verified Pandits, Not Random Contacts",
+                "description": "Finding a pandit through unknown contacts can be confusing and uncertain. Book My Pooja helps you connect with verified and experienced pandits based on your pooja requirement, location, language preference, date, and availability."
+            },
+            {
+                "title": "Right Pandit for the Right Pooja",
+                "description": "Every pooja has a different ritual process. Whether it is Griha Pravesh, Satyanarayana Pooja, Vastu Shanti, Homam, Rudrabhishek, Lakshmi Pooja, or family rituals, our team helps you find a suitable pandit for that specific ceremony."
+            },
+            {
+                "title": "Preferred Language Pandit Available",
+                "description": "Pooja feels more meaningful when your family understands the rituals and instructions. We help arrange pandits based on your preferred language, depending on your city and availability."
+            },
+            {
+                "title": "Complete Coordination Before the Pooja",
+                "description": "Our coordinator helps you plan the important details before confirmation, including pooja type, date, time, location, language preference, samagri requirement, and package discussion."
+            },
+            {
+                "title": "Samagri Guidance or Arrangement Support",
+                "description": "You do not have to worry about missing important pooja items. We can share the required samagri list in advance or help with complete samagri arrangement based on your requirement."
+            },
+            {
+                "title": "Package Clarity Before Confirmation",
+                "description": "Before booking, you get clarity on pandit availability, pooja requirements, package details, samagri support, and coordination process, so there is no confusion later."
+            }
+        ]
+    },
+    "problemsWeSolve": {
+        "heading": "Avoid Last-Minute Pandit Booking Stress",
+        "items": [
+            "Searching for a pandit at the last moment",
+            "Not knowing which pandit is right for the pooja",
+            "Language mismatch with the pandit",
+            "Unclear charges or package details",
+            "No proper samagri guidance",
+            "Confusion about pooja timing and requirements",
+            "Difficulty finding pandit availability on auspicious dates",
+            "No coordination support before the ceremony"
+        ],
+        "footer": "Book My Pooja helps you avoid these problems with a simple, guided, and reliable pandit booking process."
+    },
+    "serviceInclusions": {
+        "heading": "Everything You Need for a Smooth Pooja Experience",
+        "items": [
+            "Verified pandit based on your pooja requirement",
+            "Pooja-specific ritual guidance",
+            "Preferred language support",
+            "Pooja date and timing coordination",
+            "Samagri list or arrangement support",
+            "Package discussion before confirmation",
+            "WhatsApp and call support",
+            "Home visit coordination"
+        ],
+        "cta": "Check Pandit Availability"
+    },
+    "poojaServices": {
+        "heading": "Book Pandits for Different Poojas and Rituals",
+        "items": [
+            "Griha Pravesh Pooja",
+            "Satyanarayana Pooja",
+            "Vastu Shanti Pooja",
+            "Ganapathi Homam",
+            "Lakshmi Pooja",
+            "Navagraha Pooja",
+            "Rudrabhishek Pooja",
+            "Mahamrityunjaya Jaap",
+            "Ayush Homam",
+            "Marriage Rituals",
+            "Naming Ceremony",
+            "Business Opening Pooja"
+        ],
+        "cta": "Select Your Pooja Type"
+    },
+    "packageSection": {
+        "heading": "Get the Right Pandit Package for Your Requirement",
+        "packages": [
+            {
+                "title": "Basic Pooja with Pandit"
+            },
+            {
+                "title": "Pooja with Samagri Guidance"
+            },
+            {
+                "title": "Complete Pooja with Samagri Arrangement"
+            },
+            {
+                "title": "Custom Ritual Package Based on Family Tradition"
+            }
+        ],
+        "supportingText": "Package details may vary based on pooja type, city, preferred language, pooja date, samagri requirement, and ritual complexity.",
+        "cta": "Get Exact Package Details"
+    },
+    "bookingProcess": {
+        "heading": "Simple Pandit Booking Process",
+        "steps": [
+            "Fill the enquiry form with your pooja requirement.",
+            "Our pooja coordinator contacts you.",
+            "Pandit availability, pooja type, language, package, date, and samagri requirement are discussed.",
+            "Your booking is confirmed.",
+            "The pandit visits your home and performs the pooja as per the agreed requirement."
+        ]
+    },
+    "trustSection": {
+        "heading": "Trusted Pandit Booking Support for Families",
+        "items": [
+            "Experienced pooja coordination team",
+            "Verified pandits across major cities",
+            "Support for multiple pooja categories",
+            "Preferred language support",
+            "Clear communication before booking",
+            "Guidance for samagri and preparation",
+            "Reliable support through call and WhatsApp"
+        ]
+    },
+    "reviews": [
+        {
+            "review": "We were searching for a pandit for our home pooja and Book My Pooja made the process very easy. The coordination was smooth and the pandit arrived on time."
+        },
+        {
+            "review": "The team helped us choose the right pooja package and arranged a pandit in our preferred language. Very helpful and professional service."
+        },
+        {
+            "review": "Good support from enquiry to pooja completion. We got clear details about the package, samagri, and timing before booking."
+        }
+    ],
+    "faqs": [
+        {
+            "question": "Can I book a pandit for pooja at home?",
+            "answer": "Yes, you can book a verified pandit for home pooja based on your city, pooja type, date, language preference, and availability."
+        },
+        {
+            "question": "Can I choose the pooja type?",
+            "answer": "Yes, you can select the required pooja type such as Griha Pravesh, Satyanarayana Pooja, Vastu Shanti, Homam, Rudrabhishek, Lakshmi Pooja, and more."
+        },
+        {
+            "question": "Can I get a pandit in my preferred language?",
+            "answer": "Yes, preferred language pandits can be arranged depending on your location and availability."
+        },
+        {
+            "question": "Will you help with samagri?",
+            "answer": "Yes, we can share the samagri list in advance or help with samagri arrangement based on your requirement."
+        },
+        {
+            "question": "Can I get package details before booking?",
+            "answer": "Yes, package details will be discussed before confirmation so you have clarity before proceeding."
+        },
+        {
+            "question": "Can I book a pandit urgently?",
+            "answer": "Urgent pandit booking can be checked based on availability in your city."
+        }
+    ],
+    "finalCTA": {
+        "heading": "Book the Right Pandit Without Last-Minute Stress",
+        "description": "Get verified pandits, pooja-specific guidance, preferred language support, samagri assistance, and complete coordination for your home pooja.",
+        "buttons": [
+            "Check Pandit Availability",
+            "Get Callback",
+            "Chat on WhatsApp"
+        ]
+    },
+    "relatedPoojas": {
+        "heading": "Other Poojas You Can Book",
+        "items": [
+            "Griha Pravesh Pooja",
+            "Satyanarayana Pooja",
+            "Vastu Shanti Pooja",
+            "Ganapathi Homam",
+            "Lakshmi Pooja",
+            "Navagraha Pooja",
+            "Rudrabhishek Pooja",
+            "Mahamrityunjaya Jaap",
+            "Ayush Homam",
+            "Naming Ceremony",
+            "Marriage Rituals",
+            "Business Opening Pooja"
+        ],
+        "cta": "Explore Other Poojas"
+    }
+}

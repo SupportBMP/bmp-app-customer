@@ -1,0 +1,41 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="ganpatiBg" cx="50%" cy="42%" r="60%">
+      <stop offset="0%" stop-color="#FFE8B0"/>
+      <stop offset="55%" stop-color="#F6C453"/>
+      <stop offset="100%" stop-color="#D98E1E"/>
+    </radialGradient>
+    <linearGradient id="ganpatiGold" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFF3D6"/>
+      <stop offset="100%" stop-color="#E8A93A"/>
+    </linearGradient>
+  </defs>
+
+  <circle cx="32" cy="32" r="31" fill="url(#ganpatiBg)" stroke="#B8721A" stroke-width="1"/>
+
+  <!-- Ears -->
+  <ellipse cx="14" cy="30" rx="7.5" ry="10" fill="url(#ganpatiGold)" stroke="#B8721A" stroke-width="1"/>
+  <ellipse cx="50" cy="30" rx="7.5" ry="10" fill="url(#ganpatiGold)" stroke="#B8721A" stroke-width="1"/>
+
+  <!-- Crown -->
+  <path d="M22 15 C24 8, 40 8, 42 15 L40 18 L24 18 Z" fill="url(#ganpatiGold)" stroke="#B8721A" stroke-width="1"/>
+  <circle cx="32" cy="9" r="2.4" fill="#E24A4A"/>
+
+  <!-- Head -->
+  <path d="M20 20 C20 15, 44 15, 44 20 C46 24, 45 34, 40 39 C36 43, 28 43, 24 39 C19 34, 18 24, 20 20 Z"
+        fill="url(#ganpatiGold)" stroke="#B8721A" stroke-width="1"/>
+
+  <!-- Eyes -->
+  <circle cx="27" cy="27" r="1.6" fill="#5A3A12"/>
+  <circle cx="37" cy="27" r="1.6" fill="#5A3A12"/>
+
+  <!-- Tilak -->
+  <path d="M32 20 L33.4 23 L32 24.5 L30.6 23 Z" fill="#E24A4A"/>
+
+  <!-- Trunk -->
+  <path d="M31 30 C28 33, 27 37, 30 40 C32 42, 35 41.5, 35.5 39 C35.8 37.4, 34 37, 33 38.2 C32.3 39, 33 40.2, 34 40"
+        fill="none" stroke="#8A5A16" stroke-width="2.6" stroke-linecap="round"/>
+
+  <!-- Tusk -->
+  <path d="M28.5 35.5 L26.5 39" stroke="#FFF8EA" stroke-width="2" stroke-linecap="round"/>
+</svg>

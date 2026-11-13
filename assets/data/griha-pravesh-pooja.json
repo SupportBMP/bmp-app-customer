@@ -1,0 +1,251 @@
+{
+    "slug": "griha-pravesh-pooja",
+    "pageType": "pooja",
+    "name": "Griha Pravesh Pooja",
+    "hero": {
+        "heading": "Book Trusted Pandit for Griha Pravesh Pooja at Your New Home",
+        "subHeading": "Make your housewarming ceremony stress-free with verified pandits, proper vidhi, language preference, samagri guidance, and complete pooja coordination.",
+        "trustHighlights": [
+            "Verified Pandits",
+            "Proper Griha Pravesh Vidhi",
+            "Preferred Language Available",
+            "Samagri Guidance",
+            "Muhurat Support",
+            "Home Visit Coordination"
+        ],
+        "primaryCTA": {
+            "text": "Book Griha Pravesh Pooja",
+            "action": "book_now"
+        },
+        "secondaryCTA": {
+            "text": "Get Package Details on WhatsApp",
+            "action": "whatsapp"
+        }
+    },
+    "leadForm": {
+        "heading": "Plan Your Griha Pravesh Pooja With Us",
+        "description": "Share your details and our pooja coordinator will help you with pandit availability, package details, muhurat support, and samagri guidance.",
+        "submitButton": "Get Callback From Pooja Coordinator",
+        "fields": [
+            {
+                "key": "full_name",
+                "label": "Full Name",
+                "type": "text",
+                "required": true
+            },
+            {
+                "key": "phone_number",
+                "label": "Phone Number",
+                "type": "phone",
+                "required": true
+            },
+            {
+                "key": "city",
+                "label": "City",
+                "type": "dropdown",
+                "required": true,
+                "options": [
+                    "Mumbai",
+                    "Pune",
+                    "Bangalore",
+                    "Hyderabad",
+                    "Chennai",
+                    "Delhi NCR",
+                    "Kolkata",
+                    "Ahmedabad",
+                    "Other"
+                ]
+            },
+            {
+                "key": "pooja_location_area",
+                "label": "Pooja Location Area",
+                "type": "text",
+                "required": false
+            },
+            {
+                "key": "preferred_language",
+                "label": "Preferred Language",
+                "type": "dropdown",
+                "required": true
+            },
+            {
+                "key": "need_muhurat_support",
+                "label": "Need Muhurat Support?",
+                "type": "radio",
+                "options": [
+                    "Yes",
+                    "No"
+                ]
+            },
+            {
+                "key": "planning",
+                "label": "When Are You Planning the Pooja?",
+                "type": "dropdown",
+                "options": [
+                    "Today",
+                    "Tomorrow",
+                    "Within 3 Days",
+                    "This Week",
+                    "This Month",
+                    "Just Enquiring"
+                ]
+            }
+        ]
+    },
+    "whyChooseUs": {
+        "heading": "Why Families Choose Book My Pooja for Griha Pravesh",
+        "items": [
+            {
+                "title": "Verified Pandits, Not Random Contacts",
+                "description": "Your Griha Pravesh is an important family ceremony. We help you connect with verified and experienced pandits who understand the rituals and perform the pooja with proper guidance."
+            },
+            {
+                "title": "Complete Coordination Before the Pooja",
+                "description": "From date, time, language preference, samagri requirement, and pandit availability, our team coordinates everything before confirmation so there is no last-minute confusion."
+            },
+            {
+                "title": "Preferred Language Pandit Available",
+                "description": "Every family has its own tradition and comfort language. We help arrange pandits based on your preferred language, depending on city and availability."
+            },
+            {
+                "title": "Samagri Guidance or Arrangement Support",
+                "description": "You do not have to worry about missing important pooja items. We can share the samagri list in advance or help with complete samagri arrangement based on your requirement."
+            },
+            {
+                "title": "Muhurat & Date Support",
+                "description": "Need help choosing the right date or time? Our team can guide you with muhurat support so your Griha Pravesh can be planned properly."
+            },
+            {
+                "title": "Clear Package Discussion Before Booking",
+                "description": "Before confirmation, you get clarity on the pooja requirement, package, samagri, pandit availability, and coordination process."
+            }
+        ]
+    },
+    "problemsWeSolve": {
+        "heading": "Avoid Last-Minute Griha Pravesh Pooja Stress",
+        "items": [
+            "Searching for a pandit at the last moment",
+            "Not knowing the correct samagri list",
+            "Language mismatch with the pandit",
+            "Unclear pooja package or charges",
+            "No proper coordination before the ceremony",
+            "Confusion about date, time, and rituals",
+            "Pandit availability issues near the pooja date"
+        ],
+        "footer": "Book My Pooja helps you avoid these problems with a simple, guided, and reliable booking process."
+    },
+    "serviceInclusions": {
+        "heading": "Everything You Need for a Smooth Griha Pravesh Pooja",
+        "items": [
+            "Verified pandit for Griha Pravesh Pooja",
+            "Proper ritual guidance",
+            "Language preference support",
+            "Pooja date and timing coordination",
+            "Samagri list or arrangement support",
+            "Package discussion before confirmation",
+            "WhatsApp and call support",
+            "Home visit coordination"
+        ],
+        "cta": "Check Pandit Availability"
+    },
+    "packageSection": {
+        "heading": "Choose the Right Griha Pravesh Pooja Package",
+        "packages": [
+            {
+                "title": "Basic Griha Pravesh Pooja"
+            },
+            {
+                "title": "Griha Pravesh Pooja with Samagri Guidance"
+            },
+            {
+                "title": "Complete Griha Pravesh Pooja with Samagri Arrangement"
+            },
+            {
+                "title": "Customized Pooja Based on Family Tradition"
+            }
+        ],
+        "supportingText": "Package details may vary based on city, date, language preference, samagri requirement, and ritual requirements.",
+        "cta": "Get Exact Package Details"
+    },
+    "bookingProcess": {
+        "heading": "Simple Booking Process",
+        "steps": [
+            "Fill the enquiry form with your pooja details.",
+            "Our pooja coordinator contacts you.",
+            "Pandit availability, language, package, date, and samagri are discussed.",
+            "Your booking is confirmed.",
+            "The pandit visits your home and performs the Griha Pravesh Pooja."
+        ]
+    },
+    "trustSection": {
+        "heading": "Trusted by Families for Important Home Ceremonies",
+        "items": [
+            "Experienced pooja coordination team",
+            "Verified pandits across major cities",
+            "Support for different languages and traditions",
+            "Clear communication before confirmation",
+            "Guidance for samagri and muhurat",
+            "Reliable support through call and WhatsApp"
+        ]
+    },
+    "reviews": [
+        {
+            "review": "We booked Griha Pravesh Pooja through Book My Pooja and the process was very smooth. The pandit came on time and explained everything clearly."
+        },
+        {
+            "review": "The team helped us with samagri guidance and arranged a pandit in our preferred language. It made the housewarming ceremony stress-free."
+        },
+        {
+            "review": "Good coordination from enquiry to pooja completion. We got clear package details before booking and everything was handled properly."
+        }
+    ],
+    "faqs": [
+        {
+            "question": "Can I book a pandit for Griha Pravesh Pooja at home?",
+            "answer": "Yes, you can book a verified pandit for Griha Pravesh Pooja at your home based on your city, date, and availability."
+        },
+        {
+            "question": "Can I get a pandit in my preferred language?",
+            "answer": "Yes, preferred language pandits can be arranged depending on your location and availability."
+        },
+        {
+            "question": "Will you help with samagri?",
+            "answer": "Yes, we can share the samagri list in advance or help with samagri arrangement based on your requirement."
+        },
+        {
+            "question": "Can I get package details before booking?",
+            "answer": "Yes, the package details will be discussed before confirmation so you have clarity before proceeding."
+        },
+        {
+            "question": "Can I book urgently?",
+            "answer": "Urgent bookings can be checked based on pandit availability in your city."
+        },
+        {
+            "question": "Can you help with muhurat?",
+            "answer": "Yes, muhurat and date support can be discussed with our pooja coordinator."
+        }
+    ],
+    "finalCTA": {
+        "heading": "Plan Your Griha Pravesh Pooja Without Stress",
+        "description": "Get verified pandits, proper ritual guidance, language preference, samagri support, and complete coordination for your new home ceremony.",
+        "buttons": [
+            "Book Griha Pravesh Pooja",
+            "Get Callback",
+            "Chat on WhatsApp"
+        ]
+    },
+    "relatedPoojas": {
+        "heading": "Other Poojas You Can Book",
+        "items": [
+            "Vastu Shanti Pooja",
+            "Satyanarayan Pooja",
+            "Ganapathi Homam",
+            "Lakshmi Pooja",
+            "Navagraha Pooja",
+            "Ayush Homam",
+            "Rudrabhishek Pooja",
+            "Mahamrityunjaya Jaap"
+        ],
+        "cta": "Explore Other Poojas"
+    }
+}

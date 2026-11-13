@@ -1,0 +1,369 @@
+{
+  "Invoice": {
+    "address": {
+      "companyName": "MetaPlus Technologies Private Limited.",
+      "addressLines": [
+        "F01A, Soleil S Square",
+        "Krishappa Garden",
+        "CV Raman Nagar",
+        "Banglore 560093"
+      ]
+    },
+    "main": {
+      "title": "Invoice",
+      "orderDetails": {
+        "orderNumber": "6363",
+        "orderDate": "2024-05-15"
+      },
+      "customerDetails": {
+        "name": "Anita Sule",
+        "address": {
+          "line1": "802 Sapphire",
+          "line2": "Link Road",
+          "line3": "Moti Nagar, Mulund",
+          "city": "Mumbai",
+          "state": "Maharashtra"
+        },
+        "email": "anita.sule@example.com",
+        "phoneNumber": "1234567890"
+      },
+      "subtotal": "2999.00",
+      "shipping": "Price",
+      "allPoojaItems": "Price",
+      "total": "Price"
+    },
+
+    "sections": [
+      {
+        "title": "Customer Notes",
+        "notes": ["Pooja Date: 13 Apr 2024 2PM"],
+        "paymentLink": "https://rzp.io/i/1BjWEIJ"
+      }
+    ]
+  },
+  "sections": [
+    {
+      "icon": "/icons/monk.png",
+      "title": "Learned Pandit Jis",
+      "description": "We ensure that we onboard highly qualified Pandit Ji who can deliver the top-notch pooja experience."
+    },
+    {
+      "icon": "/icons/handshake.png",
+      "title": "Transparency",
+      "description": "We ensure transparency in our processes to build trust with our customers."
+    },
+    {
+      "icon": "/icons/wallet.png",
+      "title": "Value for Money",
+      "description": "We provide value for money services without compromising on quality."
+    },
+    {
+      "icon": "/icons/headphone-dummy.svg",
+      "title": "24/7 Support",
+      "description": "We offer round-the-clock customer support to assist you with any queries or concerns."
+    }
+  ],
+  "statistics": [
+    {
+      "value": "8",
+      "label": "Cities"
+    },
+    {
+      "value": "2000+",
+      "label": "Multilingual Purohits Associated"
+    },
+    {
+      "value": "10000+",
+      "label": "Families Served"
+    },
+    {
+      "value": "4.8",
+      "label": "Pooja Satisfaction Rating on Google"
+    }
+  ],
+  "termsPrivacyAccordion": [
+    {
+      "header": "Terms of Use",
+      "content": "The Website Owner, including subsidiaries and affiliates (“BookMyPooja.Online” or “we” or “us” or “our” or “MetaPlus Technologies Private Limited”) provides the information contained on the website or any of the pages comprising the website (“website”) to visitors (“visitors”) (cumulatively referred to as “you” or “your” hereinafter) subject to the terms and conditions set out in these website terms and conditions, the privacy policy and any other relevant terms and conditions, policies and notices which may be applicable to a specific section or module of the website.",
+      "itemType": "item2"
+    },
+    {
+      "header": "Terms and Conditions",
+      "content": "Welcome to BookMyPooja.Online – India’s most trusted pooja booking platform. If you continue to browse and use this website you are agreeing to comply with and be bound by the following terms and conditions of use, which together with our privacy policy govern BookMyPooja.Online relationship with you in relation to this website. The term ‘BookMyPooja.Online’ or ‘us’ or ‘we’ refers to the MetaPlus Technologies Private Limited, a Private Limited Company registered under Companies act, 2013. The company has its registered address at R1/2190/1, Sambhaji Nagar, Latur ( Maharashtra ) 413512. The term ‘you’ refers to the user or viewer of this website. We are in the business of providing an online, convenient, transperant and hassle free experience in context with performing various religious rituals, as updated and modified on the website from time to time. Apart from the service provision, there may be other religious goods and products that will be displayed for purchase by the customer. For any issues or queries, you can reach out to us at +91 9869929292 or email to us at support@bookmypooja.online",
+      "itemType": "item2"
+    },
+    {
+      "header": "What happens after I book a pooja?",
+      "content": " Once you order a pooja from us, based on the date of pooja, we will assign a qualified Pandit Ji from our pool of registered Pandits – based on Language selection and type of Pooja requested – to conduct at your premises Please note – BookMyPooja strives best for allocating Pujaris based on your preferences. In case the specific language priest is not available for reasonable reasons, BookMyPooja team will allocate Pujaris in a related language. For example, if a Kannada Speaking preference priest is not available, alternative Tamil or Telugu speaking priest can be all0cated If a Marathi, Odiya or Bengali or Gujarati Speaking priest is not available, Hindi speaking priest may be allocated",
+      "itemType": "item2"
+    },
+    {
+      "header": "What is Included in 'Pooja With Samagri' option?",
+      "content": " Is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using &#39;Content here, content here&#39;, making it look like readable English.",
+      "itemType": "item2"
+    },
+    {
+      "header": "Refunds Policy and Cancellation Policy",
+      "content": "We understand that you may have to cancel the Pooja ceremony for some reasons. In case of customer initiated cancellations, You need to get in touch with our customer care number 8150878717 via Call / WhatsApp  or email to us on our official support email ID\n\nIf the pooja is cancelled for more than 96 hours, 90% amount will be refunded\nIf the pooja is cancelled for 48 to 96 hours, 50% amount will be refunded\nIf the pooja is cancelled for 0 to 48 hours, no amount will be refunded\nWe strive to provide the best experience possible, however in some cases if Pandit ji can not attend to the scheduled Pooja, BookMyPooja shall process full refund within 5 working days.",
+      "itemType": "item2"
+    },
+    {
+      "header": "Rescheduling Policy",
+      "content": "Reschedule Policy – BookMyPoojaOnline.com\n\nAt BookMyPooja Online, we understand that plans may change. Our reschedule policy is designed to be flexible while ensuring smooth coordination with pandits and service arrangements.\n\n1. Eligibility for Rescheduling\n- Bookings can be rescheduled up to 48 hours before the scheduled pooja time\n- Rescheduling requests made within 48 hours of the pooja are subject to pandit availability and approval\n\n2. Number of Reschedules\n- Any additional reschedule requests may attract a rescheduling fee (between 10% to 30% of booking fee) depending on the pooja type and arrangements already made\n\n3. Process to Reschedule\n- Customers must request rescheduling by contacting BookMyPooja Online customer support via call or WhatsApp, along with submitting a reschedule request directly through their booking portal in case you have booked from website\n- New date and time will be confirmed based on pandit availability and muhurat\n\n4. Samagri & Setup Impact\n- If samagri or logistics have already been arranged, rescheduling may involve additional charges\n- Fresh samagri requirements due to date change will be charged separately, if applicable\n\n5. Force Majeure / Unavoidable Situations\n- In cases of emergencies, health issues, or unavoidable circumstances, BookMyPooja Online will make best efforts to accommodate rescheduling without penalty\n\n6. No-Show Policy\n- If the customer is unavailable at the scheduled time without prior notice, the booking will be treated as completed, and rescheduling will not be permitted\n\n7. Company Rights\n- BookMyPooja Online reserves the right to reschedule or assign an alternate pandit in rare situations due to availability, emergencies, or unforeseen circumstances, while maintaining ritual integrity\n\n8. Acceptance of Policy\n- By booking a pooja on BookMyPoojaOnline.com, the customer agrees to this reschedule policy.",
+      "itemType": "item2"
+    },
+    {
+      "header": "Returns Policy",
+      "content": " Is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using &#39;Content here, content here&#39;, making it look like readable English.",
+      "itemType": "item2"
+    },
+    {
+      "header": "Special Notice to customers for Cancellations and Reschedules for Festival Dates and near festival dates for following dates of 2026\n",
+      "content": "Regular cancellations and reschedule rules will not apply on the dates mentioned.\nAny bookings made for these dates and dates +/-1 day, after the pandit ji is assigned, there will not be any reschedule allowed with regards to timing.\nThe cancellation penalty will be 100% of the charges.\nThis is due to the fact that – because of festive rush demands, managing and reshuffling pandit ji schedules becomes an impossible task.\nYour cooperation is appreciated.\n\n📅 FESTIVAL DATES FOR 2026\n\n── JANUARY ──\n03 Jan (Sat)  •  Pausha Purnima\n06 Jan (Tue)  •  Sakat Chauth\n14 Jan (Wed)  •  Makar Sankranti / Pongal / Shattila Ekadashi\n18 Jan (Sun)  •  Mauni Amavasya\n23 Jan (Fri)  •  Vasant Panchami\n25 Jan (Sun)  •  Ratha Saptami\n26 Jan (Mon)  •  Bhishma Ashtami\n29 Jan (Thu)  •  Jaya Ekadashi\n\n── FEBRUARY ──\n01 Feb (Sun)  •  Magha Purnima (Shukla Purnima)\n13 Feb (Fri)  •  Kumbha Sankranti / Vijaya Ekadashi\n15 Feb (Sun)  •  Maha Shivaratri\n17 Feb (Tue)  •  Surya Grahan\n26 Feb (Thu)  •  Republic Day (observed)\n27 Feb (Fri)  •  Amalaki Ekadashi\n\n── MARCH ──\n03 Mar (Tue)  •  Chhoti Holi / Lunar Eclipse\n04 Mar (Wed)  •  Holi\n11 Mar (Wed)  •  Sheetala Ashtami\n15 Mar (Sun)  •  Meena Sankranti / Papamochani Ekadashi\n19 Mar (Thu)  •  Ugadi / Gudi Padwa\n21 Mar (Sat)  •  Gauri Puja / Gangaur\n26 Mar (Thu)  •  Rama Navami (Smarta)\n27 Mar (Fri)  •  Rama Navami (ISKCON) / Swaminarayan Jayanti\n29 Mar (Sun)  •  Kamada Ekadashi\n\n── APRIL ──\n02 Apr (Thu)  •  Hanuman Jayanti / Hanuman Janmotsava\n13 Apr (Mon)  •  Varuthini Ekadashi\n14 Apr (Tue)  •  Mesha Sankranti\n19 Apr (Sun)  •  Parashurama Jayanti & Akshaya Tritiya\n23 Apr (Thu)  •  Ganga Saptami\n25 Apr (Sat)  •  Sita Navami\n27 Apr (Mon)  •  Mohini Ekadashi\n30 Apr (Thu)  •  Narasimha Jayanti\n\n── MAY ──\n01 May (Fri)  •  Buddha Purnima / Vaishakha Purnima\n02 May (Sat)  •  Narada Jayanti\n13 May (Wed)  •  Apara Ekadashi\n15 May (Fri)  •  Vrishabha Sankranti\n16 May (Sat)  •  Vat Savitri Vrat & Shani Jayanti\n25 May (Mon)  •  Ganga Dussehra\n27 May (Wed)  •  Padmini Ekadashi\n31 May (Sun)  •  Jyeshtha Adhika Purnima\n\n── JUNE ──\n11 Jun (Thu)  •  Parama Ekadashi\n15 Jun (Mon)  •  Mithuna Sankranti\n25 Jun (Thu)  •  Nirjala Ekadashi\n29 Jun (Mon)  •  Vat Purnima Vrat / Jyeshtha Purnima\n\n── JULY ──\n10 Jul (Fri)  •  Yogini Ekadashi\n11 Jul (Sat)  •  Gauna Yogini Ekadashi\n16 Jul (Thu)  •  Jagannath Rathyatra & Karka Sankranti\n25 Jul (Sat)  •  Devshayani Ekadashi\n29 Jul (Wed)  •  Guru Purnima / Ashadha Purnima\n\n── AUGUST ──\n15 Aug (Sat)  •  Independence Day (National Observance)\n26 Aug (Wed)  •  Onam\n28 Aug (Fri)  •  Raksha Bandhan / Rakhi\n\n── SEPTEMBER ──\n04 Sep (Fri)  •  Krishna Janmashtami\n14 Sep (Mon)  •  Ganesh Chaturthi\n\n── OCTOBER ──\n06 Oct (Tue)  •  Indira Ekadashi\n11 Oct (Sun)  •  Navratri Begins\n19 Oct (Mon)  •  Durga Ashtami / Maha Navami\n20 Oct (Tue)  •  Vijaya Dashami / Dussehra\n22 Oct (Thu)  •  Papankusha Ekadashi\n25 Oct (Sun)  •  Sharad Purnima / Kojagara Puja\n29 Oct (Thu)  •  Karwa Chauth\n\n── NOVEMBER ──\n01 Nov (Sun)  •  Ahoi Ashtami\n05 Nov (Thu)  •  Govatsa Dwadashi / Rama Ekadashi\n06 Nov (Fri)  •  Dhanteras\n08 Nov (Sun)  •  Lakshmi Puja / Diwali / Narak Chaturdashi\n09 Nov (Mon)  •  Govardhan Puja\n11 Nov (Wed)  •  Bhai Dooj / Bhaiya Dooj\n15 Nov (Sun)  •  Chhath Puja\n16 Nov (Mon)  •  Vrishchika Sankranti\n20 Nov (Fri)  •  Devutthana Ekadashi\n24 Nov (Tue)  •  Kartika Purnima\n\n── DECEMBER ──\n25 Dec (Fri)  •  Jaya Ekadashi\n\nNote: Dates +/- 1 day from each of the above are also covered under this special notice.",
+      "itemType": "item2"
+    }
+  ],
+  "additionalData": {
+    "statusCode": 200,
+    "category": {
+      "body": [
+        {
+          "Name": "Festival",
+          "_id": "Some Random ID"
+        },
+        {
+          "Name": "Ritual",
+          "_id": "Some Random ID"
+        },
+        {
+          "Name": "Havan",
+          "_id": "Some Random ID"
+        },
+        {
+          "Name": "Ceremonies",
+          "_id": "Some Random ID"
+        }
+      ]
+    },
+    "services": {
+      "body": [
+        {
+          "Name": "Categories",
+          "_id": "Some Random ID"
+        },
+        {
+          "Name": "Deity",
+          "_id": "Some Random ID"
+        },
+        {
+          "Name": "Temple Services",
+          "_id": "Some Random ID"
+        }
+      ]
+    },
+    "message": "",
+    "error": "",
+    "status": "true",
+    "totalCount": 0
+  },
+  "OrderData": [
+    {
+      "_id": "#1",
+      "pooja": {
+        "name": "Sample Pooja name",
+        "id": "some sample id",
+        "addons": "(Havan kit + Fruits + Folwers + Rudraksha)"
+      },
+      "bookingDate": "26 Jan 2024",
+      "bookingTime": "10:00AM",
+      "status": "Pending",
+      "paymentType": "partial",
+      "remainingAmount": "3000"
+    },
+    {
+      "_id": "#2",
+      "pooja": {
+        "name": "Sample Pooja name-2",
+        "id": "some sample id",
+        "addons": "(Havan kit + Fruits + Folwers + Rudraksha)"
+      },
+      "bookingDate": "26 Jan 2024",
+      "bookingTime": "10:00AM",
+      "status": "Accepted",
+      "paymentType": "partial",
+      "remainingAmount": "3000"
+    },
+    {
+      "_id": "#3",
+      "pooja": {
+        "name": "Sample Pooja name-3",
+        "id": "some sample id",
+        "addons": "(Havan kit + Fruits + Folwers + Rudraksha)"
+      },
+      "bookingDate": "26 Jan 2024",
+      "bookingTime": "10:00AM",
+      "status": "Completed",
+      "paymentType": "partial",
+      "remainingAmount": "3000"
+    },
+    {
+      "_id": "#4",
+      "pooja": {
+        "name": "Sample Pooja name-4",
+        "id": "some sample id",
+        "addons": "(Havan kit + Fruits + Folwers + Rudraksha)"
+      },
+      "bookingDate": "26 Jan 2024",
+      "bookingTime": "10:00AM",
+      "status": "Cancelled",
+      "paymentType": "partial",
+      "remainingAmount": "3000"
+    }
+  ],
+  "BlogData": [
+    {
+      "mainImageSrc": "/images/Poojas1.jpg",
+      "mainImageAlt": "Naag Panchami",
+      "title": "Naag Panchami – What is it and Why is it celebrated?",
+      "description": "Nag Panchami, a festival honoring the Hindu serpent God Shesha Nag, is observed throughout India. Marathi people celebrate it with enthusiasm...",
+      "author": "Devesh Verma",
+      "date": "12 Mar, 24",
+      "icon1Src": "/icons/like.svg",
+      "icon1Alt": "Like",
+      "icon2Src": "/icons/share-arrow.svg",
+      "icon2Alt": "Share"
+    },
+    {
+      "mainImageSrc": "/images/Poojas1.jpg",
+      "mainImageAlt": "Diwali Celebration",
+      "title": "The Significance of Diwali in Hindu Culture",
+      "description": "Diwali, also known as the Festival of Lights, is one of the most important festivals in Hinduism. It symbolizes the victory of light over darkness...",
+      "author": "Rohit Sharma",
+      "date": "7 Nov, 23",
+      "icon1Src": "/icons/like.svg",
+      "icon1Alt": "Like",
+      "icon2Src": "/icons/share-arrow.svg",
+      "icon2Alt": "Share"
+    },
+    {
+      "mainImageSrc": "/images/Poojas1.jpg",
+      "mainImageAlt": "Holi Festival",
+      "title": "Holi – The Festival of Colors",
+      "description": "Holi is a vibrant festival that celebrates the arrival of spring and the victory of good over evil. It is known for its colorful powder throwing...",
+      "author": "Sneha Mehta",
+      "date": "18 Mar, 24",
+      "icon1Src": "/icons/like.svg",
+      "icon1Alt": "Like",
+      "icon2Src": "/icons/share-arrow.svg",
+      "icon2Alt": "Share"
+    },
+    {
+      "mainImageSrc": "/images/Poojas1.jpg",
+      "mainImageAlt": "Ganesh Chaturthi",
+      "title": "Ganesh Chaturthi – Celebrating the Birth of Lord Ganesha",
+      "description": "Ganesh Chaturthi is a significant Hindu festival that marks the birth of Lord Ganesha. People celebrate it by worshipping clay idols of Ganesha...",
+      "author": "Rajesh Iyer",
+      "date": "1 Sep, 23",
+      "icon1Src": "/icons/like.svg",
+      "icon1Alt": "Like",
+      "icon2Src": "/icons/share-arrow.svg",
+      "icon2Alt": "Share"
+    },
+    {
+      "mainImageSrc": "/images/Poojas1.jpg",
+      "mainImageAlt": "Navratri",
+      "title": "Navratri – A Festival of Nine Nights",
+      "description": "Navratri is a festival dedicated to the worship of Goddess Durga. It spans nine nights and is celebrated with traditional dances like Garba and Dandiya...",
+      "author": "Anjali Patel",
+      "date": "15 Oct, 23",
+      "icon1Src": "/icons/like.svg",
+      "icon1Alt": "Like",
+      "icon2Src": "/icons/share-arrow.svg",
+      "icon2Alt": "Share"
+    },
+    {
+      "mainImageSrc": "/images/Poojas1.jpg",
+      "mainImageAlt": "Raksha Bandhan",
+      "title": "Raksha Bandhan – The Bond of Protection",
+      "description": "Raksha Bandhan is a festival that celebrates the bond between brothers and sisters. Sisters tie a rakhi on their brothers' wrists, symbolizing protection...",
+      "author": "Priya Kapoor",
+      "date": "22 Aug, 23",
+      "icon1Src": "/icons/like.svg",
+      "icon1Alt": "Like",
+      "icon2Src": "/icons/share-arrow.svg",
+      "icon2Alt": "Share"
+    },
+    {
+      "mainImageSrc": "/images/Poojas1.jpg",
+      "mainImageAlt": "Karva Chauth",
+      "title": "Karva Chauth – A Festival for Married Women",
+      "description": "Karva Chauth is a traditional festival where married women fast from sunrise to moonrise for the well-being and longevity of their husbands...",
+      "author": "Meena Agarwal",
+      "date": "28 Oct, 23",
+      "icon1Src": "/icons/like.svg",
+      "icon1Alt": "Like",
+      "icon2Src": "/icons/share-arrow.svg",
+      "icon2Alt": "Share"
+    },
+    {
+      "mainImageSrc": "/images/Poojas1.jpg",
+      "mainImageAlt": "Maha Shivaratri",
+      "title": "Maha Shivaratri – The Great Night of Lord Shiva",
+      "description": "Maha Shivaratri is a Hindu festival dedicated to Lord Shiva. Devotees observe fasting and night-long vigils in honor of the divine marriage of Shiva and Parvati...",
+      "author": "Vikram Rao",
+      "date": "11 Mar, 24",
+      "icon1Src": "/icons/like.svg",
+      "icon1Alt": "Like",
+      "icon2Src": "/icons/share-arrow.svg",
+      "icon2Alt": "Share"
+    },
+    {
+      "mainImageSrc": "/images/Poojas1.jpg",
+      "mainImageAlt": "Janmashtami",
+      "title": "Janmashtami – Celebrating the Birth of Lord Krishna",
+      "description": "Janmashtami marks the birth of Lord Krishna and is celebrated with prayers, songs, and dances. The highlight of the festival is the Dahi Handi event...",
+      "author": "Suresh Kumar",
+      "date": "24 Aug, 23",
+      "icon1Src": "/icons/like.svg",
+      "icon1Alt": "Like",
+      "icon2Src": "/icons/share-arrow.svg",
+      "icon2Alt": "Share"
+    },
+    {
+      "mainImageSrc": "/images/Poojas1.jpg",
+      "mainImageAlt": "Makar Sankranti",
+      "title": "Makar Sankranti – The Harvest Festival",
+      "description": "Makar Sankranti is a festival that marks the transition of the sun into Capricorn. It is celebrated with kite flying and the preparation of sweets made from sesame seeds...",
+      "author": "Pooja Singh",
+      "date": "14 Jan, 24",
+      "icon1Src": "/icons/like.svg",
+      "icon1Alt": "Like",
+      "icon2Src": "/icons/share-arrow.svg",
+      "icon2Alt": "Share"
+    },
+    {
+      "mainImageSrc": "/images/Poojas1.jpg",
+      "mainImageAlt": "Eid-ul-Fitr",
+      "title": "Eid-ul-Fitr – The Festival of Breaking the Fast",
+      "description": "Eid-ul-Fitr is a significant Islamic festival that marks the end of Ramadan. It is a day of feasting, family gatherings, and charitable giving...",
+      "author": "Farhan Ali",
+      "date": "10 May, 24",
+      "icon1Src": "/icons/like.svg",
+      "icon1Alt": "Like",
+      "icon2Src": "/icons/share-arrow.svg",
+      "icon2Alt": "Share"
+    },
+    {
+      "mainImageSrc": "/images/Poojas1.jpg",
+      "mainImageAlt": "Christmas",
+      "title": "Christmas – Celebrating the Birth of Jesus Christ",
+      "description": "Christmas is a Christian festival that celebrates the birth of Jesus Christ. It is observed with church services, gift-giving, and festive meals...",
+      "author": "John D'Souza",
+      "date": "25 Dec, 23",
+      "icon1Src": "/icons/like.svg",
+      "icon1Alt": "Like",
+      "icon2Src": "/icons/share-arrow.svg",
+      "icon2Alt": "Share"
+    }
+  ]
+}

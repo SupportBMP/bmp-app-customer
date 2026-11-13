@@ -1,0 +1,7 @@
+{
+  "API_HOST": "https://api.bookmypoojaonline.com/",
+  "SITE_URL": "https://bookmypoojaonline.com",
+  "RAZORPAY_KEY": "rzp_live_xxxxxxxx",
+  "GOOGLE_API_KEY": "your-google-places-key",
+  "SANITY_PROJECT_ID": "your-sanity-project-id"
+}

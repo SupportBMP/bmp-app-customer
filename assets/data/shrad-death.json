@@ -1,0 +1,285 @@
+{
+    "slug": "shradh-death-rituals",
+    "pageType": "service",
+    "name": "Shradh & Death Ritual Services",
+    "hero": {
+        "heading": "Book Verified Pandit for Shradh & Death Rituals",
+        "subHeading": "Get experienced pandits for Shradh, Pitru Karya, Tithi, and death-related rituals with proper guidance, preferred language support, samagri assistance, clear package discussion, and respectful coordination.",
+        "trustHighlights": [
+            "Verified Pandits",
+            "Shradh & Pitru Karya Support",
+            "Preferred Language Available",
+            "Samagri Guidance",
+            "Respectful Coordination",
+            "Call & WhatsApp Support"
+        ],
+        "primaryCTA": {
+            "text": "Check Pandit Availability",
+            "action": "check_availability"
+        },
+        "secondaryCTA": {
+            "text": "Get Ritual Details on WhatsApp",
+            "action": "whatsapp"
+        }
+    },
+    "leadForm": {
+        "heading": "Plan Shradh / Death Rituals With Guidance",
+        "description": "Share your ritual requirement and our pooja coordinator will help you check pandit availability, ritual type, date, samagri requirement, language preference, and package details with complete privacy and respect.",
+        "submitButton": "Get Callback From Ritual Coordinator",
+        "fields": [
+            {
+                "key": "full_name",
+                "label": "Full Name",
+                "type": "text",
+                "required": true
+            },
+            {
+                "key": "phone_number",
+                "label": "Phone Number",
+                "type": "phone",
+                "required": true
+            },
+            {
+                "key": "city",
+                "label": "City",
+                "type": "dropdown",
+                "required": true,
+                "options": [
+                    "Mumbai",
+                    "Pune",
+                    "Bangalore",
+                    "Hyderabad",
+                    "Chennai",
+                    "Delhi NCR",
+                    "Kolkata",
+                    "Ahmedabad",
+                    "Other"
+                ]
+            },
+            {
+                "key": "ritual_location_area",
+                "label": "Ritual Location Area",
+                "type": "text",
+                "required": true
+            },
+            {
+                "key": "ritual_type",
+                "label": "Type of Ritual Required",
+                "type": "dropdown",
+                "required": true,
+                "options": [
+                    "Shradh Ritual",
+                    "Pitru Karya",
+                    "Annual Death Ceremony",
+                    "Tithi Pooja",
+                    "Masa / Monthly Ritual",
+                    "Antim Sanskar Ritual Support",
+                    "Pind Daan Guidance",
+                    "Pitru Paksha Ritual",
+                    "Other"
+                ]
+            },
+            {
+                "key": "preferred_ritual_date",
+                "label": "Preferred Ritual Date",
+                "type": "date",
+                "required": true
+            },
+            {
+                "key": "preferred_language",
+                "label": "Preferred Language",
+                "type": "dropdown",
+                "required": true
+            },
+            {
+                "key": "planning",
+                "label": "When Are You Planning the Ritual?",
+                "type": "dropdown",
+                "options": [
+                    "Today",
+                    "Tomorrow",
+                    "Within 3 Days",
+                    "This Week",
+                    "This Month",
+                    "Need Guidance"
+                ]
+            }
+        ]
+    },
+    "whyChooseUs": {
+        "heading": "Why Families Choose Book My Pooja for Shradh & Pitru Karya",
+        "items": [
+            {
+                "title": "Verified Pandits for Sensitive Rituals",
+                "description": "Shradh and death-related rituals require proper procedure, care, and understanding. Book My Pooja helps you connect with verified and experienced pandits who can guide the family respectfully through the required rituals."
+            },
+            {
+                "title": "Guidance Based on Ritual Requirement",
+                "description": "Every family may need a different ritual such as Shradh, Pitru Karya, Tithi Pooja, annual death ceremony, or Pitru Paksha ritual. Our coordinator helps understand your requirement and connects you with a suitable pandit."
+            },
+            {
+                "title": "Preferred Language Pandit Available",
+                "description": "During sensitive family rituals, clear communication matters. We help arrange pandits based on your preferred language, depending on your city and availability."
+            },
+            {
+                "title": "Samagri Guidance or Arrangement Support",
+                "description": "You do not have to worry about missing important ritual items. We can share the required samagri list in advance or help with samagri arrangement based on your requirement."
+            },
+            {
+                "title": "Respectful and Private Coordination",
+                "description": "Our team handles the enquiry with care, privacy, and respect. We help coordinate the ritual details without creating unnecessary stress for the family."
+            },
+            {
+                "title": "Clear Package Discussion Before Booking",
+                "description": "Before confirmation, you get clarity on pandit availability, ritual type, samagri requirement, package details, date, time, and coordination process."
+            }
+        ]
+    },
+    "problemsWeSolve": {
+        "heading": "Support for Shradh & Death Rituals Without Last-Minute Stress",
+        "items": [
+            "Searching for a pandit during a difficult time",
+            "Not knowing which ritual is required",
+            "Confusion about tithi or ritual date",
+            "Language mismatch with the pandit",
+            "Unclear charges or package details",
+            "Not knowing the correct samagri list",
+            "Difficulty finding pandit availability urgently",
+            "No proper guidance before the ritual"
+        ],
+        "footer": "Book My Pooja helps your family arrange the required rituals with guidance, respect, and reliable coordination."
+    },
+    "serviceInclusions": {
+        "heading": "Complete Support for Shradh & Pitru Rituals",
+        "items": [
+            "Verified pandit for Shradh / Pitru Karya",
+            "Ritual-specific guidance",
+            "Preferred language support",
+            "Date and timing coordination",
+            "Samagri list or arrangement support",
+            "Clear package discussion before confirmation",
+            "WhatsApp and call support",
+            "Respectful home or venue coordination"
+        ],
+        "cta": "Check Pandit Availability"
+    },
+    "ritualServices": {
+        "heading": "Book Pandits for Shradh & Related Rituals",
+        "items": [
+            "Shradh Ritual",
+            "Pitru Karya",
+            "Tithi Pooja",
+            "Annual Death Ceremony",
+            "Monthly Rituals",
+            "Pitru Paksha Rituals",
+            "Pind Daan Guidance",
+            "Antim Sanskar Ritual Support",
+            "Asthi Visarjan Ritual Support",
+            "Custom Ritual Based on Family Tradition"
+        ],
+        "cta": "Select Your Ritual Type"
+    },
+    "packageSection": {
+        "heading": "Get the Right Ritual Package for Your Requirement",
+        "packages": [
+            {
+                "title": "Basic Ritual With Pandit"
+            },
+            {
+                "title": "Ritual With Samagri Guidance"
+            },
+            {
+                "title": "Complete Ritual With Samagri Arrangement"
+            },
+            {
+                "title": "Custom Ritual Based on Family Tradition"
+            }
+        ],
+        "supportingText": "Package details may vary based on ritual type, city, date, preferred language, samagri requirement, location, and family tradition.",
+        "cta": "Get Exact Package Details"
+    },
+    "bookingProcess": {
+        "heading": "Simple and Respectful Booking Process",
+        "steps": [
+            "Fill the enquiry form with your ritual requirement.",
+            "Our coordinator contacts you respectfully.",
+            "Ritual type, pandit availability, language, package, date, and samagri requirement are discussed.",
+            "Your booking is confirmed.",
+            "The pandit visits the home or venue and performs the ritual as per the agreed requirement."
+        ]
+    },
+    "trustSection": {
+        "heading": "Trusted Ritual Booking Support for Families",
+        "items": [
+            "Experienced ritual coordination team",
+            "Verified pandits across major cities",
+            "Support for Shradh, Pitru Karya, and Tithi rituals",
+            "Preferred language support",
+            "Guidance for samagri and preparation",
+            "Clear package discussion before booking",
+            "Respectful support through call and WhatsApp"
+        ]
+    },
+    "reviews": [
+        {
+            "review": "We needed guidance for Shradh rituals and Book My Pooja helped us arrange a pandit smoothly. The coordination was respectful and clear."
+        },
+        {
+            "review": "The team helped us understand the samagri requirement and package before booking. The pandit guided us properly during the ritual."
+        },
+        {
+            "review": "During a difficult time, the team handled the booking with care and arranged the pandit as per our requirement."
+        }
+    ],
+    "faqs": [
+        {
+            "question": "Can I book a pandit for Shradh rituals?",
+            "answer": "Yes, you can book a verified pandit for Shradh rituals based on your city, date, language preference, ritual requirement, and availability."
+        },
+        {
+            "question": "Can I book a pandit for Pitru Karya or Tithi Pooja?",
+            "answer": "Yes, pandits can be arranged for Pitru Karya, Tithi Pooja, annual death ceremony, Pitru Paksha rituals, and related requirements."
+        },
+        {
+            "question": "Can you help me understand which ritual is needed?",
+            "answer": "Yes, our coordinator can understand your requirement and help connect you with a suitable pandit for guidance."
+        },
+        {
+            "question": "Will you help with samagri?",
+            "answer": "Yes, we can share the samagri list in advance or help with samagri arrangement based on your requirement."
+        },
+        {
+            "question": "Can I get package details before booking?",
+            "answer": "Yes, package details will be discussed before confirmation so you have clarity before proceeding."
+        },
+        {
+            "question": "Can I book urgently?",
+            "answer": "Urgent bookings can be checked based on pandit availability in your city."
+        }
+    ],
+    "finalCTA": {
+        "heading": "Arrange Shradh & Pitru Rituals With Respectful Guidance",
+        "description": "Get verified pandits, ritual-specific guidance, preferred language support, samagri assistance, clear package discussion, and complete coordination for Shradh and death-related rituals.",
+        "buttons": [
+            "Check Pandit Availability",
+            "Get Callback",
+            "Chat on WhatsApp"
+        ]
+    },
+    "relatedPoojas": {
+        "heading": "Other Poojas You Can Book",
+        "items": [
+            "Pitru Paksha Ritual",
+            "Tithi Pooja",
+            "Pind Daan Guidance",
+            "Asthi Visarjan Ritual Support",
+            "Mahamrityunjaya Jaap",
+            "Navagraha Pooja",
+            "Rudrabhishek Pooja",
+            "Ganapathi Homam",
+            "Griha Pravesh Pooja",
+            "Satyanarayana Pooja"
+        ],
+        "cta": "Explore Other Poojas"
+    }
+}

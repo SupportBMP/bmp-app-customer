@@ -1,0 +1,286 @@
+{
+    "slug": "book-iyer",
+    "pageType": "service",
+    "name": "Book Iyer",
+    "hero": {
+        "heading": "Book Verified Iyer for Pooja at Home",
+        "subHeading": "Get an experienced Iyer for your home pooja with proper ritual guidance, Tamil tradition support, samagri assistance, clear package discussion, and complete booking coordination.",
+        "trustHighlights": [
+            "Verified Iyers",
+            "Tamil Ritual Guidance",
+            "Pooja at Your Home",
+            "Samagri Support",
+            "Clear Package Discussion",
+            "Call & WhatsApp Support"
+        ],
+        "primaryCTA": {
+            "text": "Check Iyer Availability",
+            "action": "check_availability"
+        },
+        "secondaryCTA": {
+            "text": "Get Package Details on WhatsApp",
+            "action": "whatsapp"
+        }
+    },
+    "leadForm": {
+        "heading": "Find the Right Iyer for Your Pooja",
+        "description": "Share your pooja requirement and our coordinator will help you check Iyer availability, pooja type, language preference, samagri requirement, package details, and booking confirmation.",
+        "submitButton": "Get Callback From Pooja Coordinator",
+        "fields": [
+            {
+                "key": "full_name",
+                "label": "Full Name",
+                "type": "text",
+                "required": true
+            },
+            {
+                "key": "phone_number",
+                "label": "Phone Number",
+                "type": "phone",
+                "required": true
+            },
+            {
+                "key": "city",
+                "label": "City",
+                "type": "dropdown",
+                "required": true,
+                "options": [
+                    "Mumbai",
+                    "Pune",
+                    "Bangalore",
+                    "Hyderabad",
+                    "Chennai",
+                    "Delhi NCR",
+                    "Kolkata",
+                    "Ahmedabad",
+                    "Other"
+                ]
+            },
+            {
+                "key": "pooja_location_area",
+                "label": "Pooja Location Area",
+                "type": "text",
+                "required": false
+            },
+            {
+                "key": "pooja_type",
+                "label": "Pooja Type",
+                "type": "dropdown",
+                "required": true,
+                "options": [
+                    "Griha Pravesh Pooja",
+                    "Satyanarayana Pooja",
+                    "Ganapathi Homam",
+                    "Lakshmi Pooja",
+                    "Navagraha Pooja",
+                    "Ayush Homam",
+                    "Marriage Rituals",
+                    "Naming Ceremony",
+                    "Upanayanam",
+                    "Seemantham",
+                    "Business Opening Pooja",
+                    "Other"
+                ]
+            },
+            {
+                "key": "preferred_language",
+                "label": "Preferred Language",
+                "type": "dropdown",
+                "required": true
+            },
+            {
+                "key": "planning",
+                "label": "When Are You Planning the Pooja?",
+                "type": "dropdown",
+                "options": [
+                    "Today",
+                    "Tomorrow",
+                    "Within 3 Days",
+                    "This Week",
+                    "This Month",
+                    "Just Enquiring"
+                ]
+            }
+        ]
+    },
+    "whyChooseUs": {
+        "heading": "Why Families Choose Book My Pooja for Iyer Booking",
+        "items": [
+            {
+                "title": "Verified Iyers, Not Random Contacts",
+                "description": "Finding the right Iyer through unknown contacts can be stressful, especially for important family rituals. Book My Pooja helps you connect with verified and experienced Iyers based on your pooja requirement, location, date, and availability."
+            },
+            {
+                "title": "Right Iyer for the Right Ritual",
+                "description": "Every ceremony has a different traditional process. Whether it is Griha Pravesh, Ganapathi Homam, Ayush Homam, Satyanarayana Pooja, Upanayanam, Seemantham, Naming Ceremony, or marriage rituals, our team helps you find a suitable Iyer for that specific requirement."
+            },
+            {
+                "title": "Tamil Tradition & Language Comfort",
+                "description": "For many families, pooja feels more meaningful when the rituals are performed in the language and tradition they follow. We help arrange Iyers who can guide your family clearly and perform the ceremony with proper traditional understanding."
+            },
+            {
+                "title": "Complete Coordination Before the Pooja",
+                "description": "Our coordinator helps you plan all important details before confirmation, including pooja type, date, time, location, samagri requirement, package discussion, and Iyer availability."
+            },
+            {
+                "title": "Samagri Guidance or Arrangement Support",
+                "description": "You do not have to worry about missing important pooja items. We can share the required samagri list in advance or help with complete samagri arrangement based on your requirement."
+            },
+            {
+                "title": "Package Clarity Before Confirmation",
+                "description": "Before booking, you get clarity on Iyer availability, ritual requirements, package details, samagri support, and coordination process, so there is no confusion later."
+            }
+        ]
+    },
+    "problemsWeSolve": {
+        "heading": "Avoid Last-Minute Iyer Booking Stress",
+        "items": [
+            "Searching for an Iyer at the last moment",
+            "Not knowing which Iyer is suitable for your ritual",
+            "Language or tradition mismatch",
+            "Unclear charges or package details",
+            "No proper samagri guidance",
+            "Confusion about pooja timing and requirements",
+            "Difficulty finding Iyer availability on auspicious dates",
+            "No coordination support before the ceremony"
+        ],
+        "footer": "Book My Pooja helps you avoid these problems with a simple, guided, and reliable Iyer booking process."
+    },
+    "serviceInclusions": {
+        "heading": "Everything You Need for a Smooth Traditional Pooja Experience",
+        "items": [
+            "Verified Iyer based on your ritual requirement",
+            "Pooja-specific traditional guidance",
+            "Tamil language and tradition support",
+            "Pooja date and timing coordination",
+            "Samagri list or arrangement support",
+            "Package discussion before confirmation",
+            "WhatsApp and call support",
+            "Home visit coordination"
+        ],
+        "cta": "Check Iyer Availability"
+    },
+    "poojaServices": {
+        "heading": "Book Iyers for Different Poojas and Rituals",
+        "items": [
+            "Griha Pravesh Pooja",
+            "Ganapathi Homam",
+            "Satyanarayana Pooja",
+            "Lakshmi Pooja",
+            "Navagraha Pooja",
+            "Ayush Homam",
+            "Mahamrityunjaya Jaap",
+            "Naming Ceremony",
+            "Upanayanam",
+            "Seemantham",
+            "Marriage Rituals",
+            "Business Opening Pooja"
+        ],
+        "cta": "Select Your Pooja Type"
+    },
+    "packageSection": {
+        "heading": "Get the Right Iyer Package for Your Requirement",
+        "packages": [
+            {
+                "title": "Basic Pooja with Iyer"
+            },
+            {
+                "title": "Pooja with Samagri Guidance"
+            },
+            {
+                "title": "Complete Pooja with Samagri Arrangement"
+            },
+            {
+                "title": "Custom Ritual Package Based on Family Tradition"
+            }
+        ],
+        "supportingText": "Package details may vary based on pooja type, city, preferred date, samagri requirement, family tradition, and ritual complexity.",
+        "cta": "Get Exact Package Details"
+    },
+    "bookingProcess": {
+        "heading": "Simple Iyer Booking Process",
+        "steps": [
+            "Fill the enquiry form with your pooja requirement.",
+            "Our pooja coordinator contacts you.",
+            "Iyer availability, pooja type, package, date, timing, and samagri requirement are discussed.",
+            "Your booking is confirmed.",
+            "The Iyer visits your home and performs the pooja as per the agreed requirement."
+        ]
+    },
+    "trustSection": {
+        "heading": "Trusted Iyer Booking Support for Families",
+        "items": [
+            "Experienced pooja coordination team",
+            "Verified Iyers across major cities",
+            "Support for multiple Tamil rituals and ceremonies",
+            "Clear communication before booking",
+            "Guidance for samagri and preparation",
+            "Reliable support through call and WhatsApp",
+            "Home pooja coordination support"
+        ]
+    },
+    "reviews": [
+        {
+            "review": "We were looking for an Iyer for our home pooja and Book My Pooja made the process very easy. The coordination was smooth and the Iyer arrived on time."
+        },
+        {
+            "review": "The team helped us understand the package and samagri requirement before booking. The pooja was performed properly and peacefully."
+        },
+        {
+            "review": "Good support from enquiry to pooja completion. We got clear details about the timing, package, and requirements before confirming."
+        }
+    ],
+    "faqs": [
+        {
+            "question": "Can I book an Iyer for pooja at home?",
+            "answer": "Yes, you can book a verified Iyer for home pooja based on your city, pooja type, date, tradition requirement, and availability."
+        },
+        {
+            "question": "Can I choose the pooja type?",
+            "answer": "Yes, you can select the required pooja type such as Griha Pravesh, Ganapathi Homam, Satyanarayana Pooja, Ayush Homam, Naming Ceremony, Upanayanam, Seemantham, and more."
+        },
+        {
+            "question": "Can I get an Iyer for Tamil rituals?",
+            "answer": "Yes, Iyers for Tamil rituals can be arranged depending on your location, pooja requirement, and availability."
+        },
+        {
+            "question": "Will you help with samagri?",
+            "answer": "Yes, we can share the samagri list in advance or help with samagri arrangement based on your requirement."
+        },
+        {
+            "question": "Can I get package details before booking?",
+            "answer": "Yes, package details will be discussed before confirmation so you have clarity before proceeding."
+        },
+        {
+            "question": "Can I book an Iyer urgently?",
+            "answer": "Urgent Iyer booking can be checked based on availability in your city."
+        }
+    ],
+    "finalCTA": {
+        "heading": "Book the Right Iyer Without Last-Minute Stress",
+        "description": "Get verified Iyers, ritual-specific guidance, Tamil tradition support, samagri assistance, clear package discussion, and complete coordination for your home pooja.",
+        "buttons": [
+            "Check Iyer Availability",
+            "Get Callback",
+            "Chat on WhatsApp"
+        ]
+    },
+    "relatedPoojas": {
+        "heading": "Other Poojas You Can Book",
+        "items": [
+            "Griha Pravesh Pooja",
+            "Ganapathi Homam",
+            "Satyanarayana Pooja",
+            "Lakshmi Pooja",
+            "Navagraha Pooja",
+            "Ayush Homam",
+            "Rudrabhishek Pooja",
+            "Mahamrityunjaya Jaap",
+            "Naming Ceremony",
+            "Marriage Rituals",
+            "Business Opening Pooja",
+            "Vastu Shanti Pooja"
+        ],
+        "cta": "Explore Other Poojas"
+    }
+}

@@ -1,0 +1,187 @@
+{
+ "hero": {
+  "headline": null,
+  "subHeadline": null,
+  "ctaText": "Book Your Puja",
+  "heroImage": null
+ },
+ "categories": {
+  "title": "Which Puja Do You Need Help With?",
+  "subtitle": "Choose your spiritual ceremony and let us handle everything",
+  "items": [
+   {
+    "title": "Health & Protection",
+    "description": "Mahamrityunjay Jaap, Navagraha Puja",
+    "icon": "/images/enquiry/protection.png",
+    "benefit": "Divine protection and healing energy"
+   },
+   {
+    "title": "New Beginnings",
+    "description": "Griha Pravesh, Vastu Shanti",
+    "icon": "/images/enquiry/new_beginnings.png",
+    "benefit": "Blessed starts for home and life"
+   },
+   {
+    "title": "Business & Work",
+    "description": "Office Puja, Lakshmi Puja",
+    "icon": "/images/enquiry/office_work.png",
+    "benefit": "Prosperity and success in ventures"
+   },
+   {
+    "title": "Special Occasions",
+    "description": "Shashtipoorthi, Satyanarayan Puja",
+    "icon": "/images/enquiry/special_oc.png",
+    "benefit": "Celebrate life's precious moments"
+   }
+  ],
+  "helpSection": {
+   "title": "Need help?",
+   "subtitle": "Chat with our Puja Advisors",
+   "phone": "+919869929292",
+   "phoneDisplay": "+91 9869929292",
+   "ctaText": "Chat with Puja Seva Team"
+  }
+ },
+ "trust": {
+  "title": "You Focus on Your Prayers. We'll Handle the Rest.",
+  "rating": "4.8⭐ Google Rating",
+  "items": [
+   {
+    "icon": "📿",
+    "title": "We Assign Certified & Trained Pandits",
+    "subtitle": "5+ years experience"
+   },
+   {
+    "icon": "📦",
+    "title": "All Samagri Arranged",
+    "subtitle": "Complete setup included"
+   },
+   {
+    "icon": "🗓️",
+    "title": "Available Pan India",
+    "subtitle": "At Home / Online"
+   },
+   {
+    "icon": "🌐",
+    "title": "Your Preferred Language",
+    "subtitle": "Multiple languages supported"
+   },
+   {
+    "icon": "💯",
+    "title": "Transparent Pricing",
+    "subtitle": "No hidden charges"
+   },
+   {
+    "icon": "⭐",
+    "title": "10,000+ Families",
+    "subtitle": "Trust our service"
+   }
+  ]
+ },
+ "testimonials": {
+  "title": "Here's How We Helped Families Just Like Yours",
+  "subtitle": "Real results, real devotion, real peace of mind",
+  "statText": "98% would book again",
+  "googleReviewsLink": "https://www.google.com/search?sca_esv=088c43baef1148eb&sxsrf=AE3TifOuLIm_29mIdIxrbcbB_wWSOnLl-w:1750498846829&si=AMgyJEtREmoPL4P1I5IDCfuA8gybfVI2d5Uj7QMwYCZHKDZ-E_2uem3Iqh7nxF5NHtqLv9wc4Ltzj_vSIeQg_CveOu7qbYFgIOfDYxLKBQu3EDk9e8fiYkNZKpf6QJFxXssdGChkCtl4&q=BookMyPooja+Reviews&sa=X&ved=2ahUKEwj048OvnIKOAxU4h1YBHelZLf8Q0bkNegQIRxAE&biw=1920&bih=934&dpr=1"
+ },
+ "videoTestimonials": {
+  "title": "Watch Real Stories From Our Blessed Families",
+  "subtitle": "Hear directly from families who experienced our puja services",
+  "ctaText": "Book Your Puja Now",
+  "items": [
+   {
+    "id": "1",
+    "name": "Deepak Murarka",
+    "location": "Bengaluru",
+    "pujaType": "Annaprashan Pooja - Hindi",
+    "videoUrl": "https://bmpassets.s3.ap-south-1.amazonaws.com/uploadedfile/HindiAnnaprashanPuja+(1)+(1).mp4",
+    "thumbnail": "https://bmpassets.s3.ap-south-1.amazonaws.com/uploadedfile/Deepak.png",
+    "duration": "0:59"
+   },
+   {
+    "id": "2",
+    "name": "Noel",
+    "location": "Bengaluru - Kannada",
+    "pujaType": "Office Puja",
+    "videoUrl": "https://bmpassets.s3.ap-south-1.amazonaws.com/uploadedfile/Office+Puja+-+Edited+(1).mp4",
+    "thumbnail": "https://bmpassets.s3.ap-south-1.amazonaws.com/uploadedfile/noel.png",
+    "duration": "0:40"
+   },
+   {
+    "id": "3",
+    "name": "Sameer Karandikar",
+    "location": "Mumbai - Marathi",
+    "pujaType": "Vastushanti Puja - Marathi",
+    "videoUrl": "https://bmpassets.s3.ap-south-1.amazonaws.com/uploadedfile/Vastu+Shanti+Marathi+edited.mp4",
+    "thumbnail": "https://bmpassets.s3.ap-south-1.amazonaws.com/uploadedfile/Sameer.png",
+    "duration": "1:11"
+   },
+   {
+    "id": "4",
+    "name": "Rajshekhar",
+    "location": "Hyderabad - Hindi",
+    "pujaType": "Shashtipoorthi Puja",
+    "videoUrl": "https://bmpassets.s3.ap-south-1.amazonaws.com/uploadedfile/Shashtipurti+Puja+edited.mp4",
+    "thumbnail": "https://bmpassets.s3.ap-south-1.amazonaws.com/uploadedfile/Rajsheskhar.png",
+    "duration": "0:43"
+   }
+  ]
+ },
+ "booking": {
+  "title": "Book Your Puja in 2 Minutes",
+  "subtitle": "Simple. Fast. Blessed.",
+  "languages": [
+   "Hindi",
+   "Marathi",
+   "Kannada",
+   "Telugu",
+   "Tamil",
+   "Malayalam",
+   "Gujarati",
+   "Bengali",
+   "Odia",
+   "English"
+  ]
+ },
+ "faq": {
+  "title": "Still Have Questions?",
+  "subtitle": "We're here to make your spiritual journey completely worry-free",
+  "items": [
+   {
+    "question": "Can I book for someone else?",
+    "answer": "Yes, absolutely! You can book a puja for family members, friends, or anyone you care about. Just mention their details in the booking form and we'll coordinate everything accordingly."
+   },
+   {
+    "question": "How is the price calculated?",
+    "answer": "BookMyPooja has transperant pricing and packages for each puja type based on culture and location. You'll know the exact cost before confirming your booking."
+   },
+   {
+    "question": "Will the pandit speak my language?",
+    "answer": "Yes! Our pandits are fluent in Hindi, English, and various regional languages including Tamil, Telugu, Gujarati, Marathi, and Bengali. We'll match you with a pandit who speaks your preferred language."
+   },
+   {
+    "question": "Can you do online pujas via video?",
+    "answer": "Absolutely! We offer live online pujas via video call where our pandit performs the ceremony while you participate from home. This is perfect for urgent needs or when physical presence isn't possible."
+   },
+   {
+    "question": "What if I need to cancel or reschedule?",
+    "answer": "You can cancel upto 24 hours before the puja date. Cancellation charges increase as you come closer to the date. For cancellations more than 96 hours before the puja, 10% cancellation fee is applied. For cancellarions between 24 to 96 hours before the puja, 50% cancellation charges are applied. For cancellations within 24 hours, 100% cancellation charges shall be applied."
+   },
+   {
+    "question": "Do you provide all the puja materials?",
+    "answer": "Yes, every package includes puja items, pandit ji Dakshina and travel charges. You may have to arrange some items at home ( called as Home preparation list ) which will be shared with you post booking confirmation by the Seva team."
+   }
+  ]
+ },
+ "cta": {
+  "title": "Perform Your Puja the Right Way – Without Stress, Confusion or Delays.",
+  "subtitle": "Let us handle everything while you focus on what matters most – your prayers and peace of mind.",
+  "buttonText": "Book Now",
+  "whatsappText": "💬 Chat on WhatsApp",
+  "features": [
+   "Same-day booking available",
+   "100% satisfaction guarantee",
+   "Transparent and Hassle free packages to choose from"
+  ]
+ }
+}
