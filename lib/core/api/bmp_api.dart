@@ -34,6 +34,11 @@ class BmpApi {
 
   static Future<Response> footer() => _c.get(_u('/pooja-global/footer'));
 
+  /// Force-update / maintenance check, called once at launch.
+  /// [platform] is `android` or `ios`; [buildNumber] is pubspec's `+N`.
+  static Future<Response> appConfig(String platform, int buildNumber) =>
+      _c.get(_u('/pooja-global/app-config?platform=$platform&buildNumber=$buildNumber'));
+
   static Future<Response> allLocations() => _c.get(_u('/pooja-locations?page=0&pageSize=100'));
 
   static Future<Response> allLanguages([int? status]) {

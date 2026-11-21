@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'core/app_update/app_update_gate.dart';
 import 'core/state/app_state.dart';
 import 'core/storage/cookies.dart';
 import 'core/theme/app_theme.dart';
@@ -51,7 +52,9 @@ class _BmpAppState extends ConsumerState<BmpApp> {
       theme: AppTheme.light(),
       scaffoldMessengerKey: Toast.messengerKey,
       routerConfig: _router,
-      builder: (context, child) => SplashOverlay(child: child ?? const SizedBox.shrink()),
+      builder: (context, child) => SplashOverlay(
+        child: AppUpdateGate(child: child ?? const SizedBox.shrink()),
+      ),
     );
   }
 }
