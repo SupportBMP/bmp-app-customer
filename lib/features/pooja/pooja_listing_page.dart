@@ -17,6 +17,9 @@ import '../../core/widgets/toast.dart';
 import '../../core/widgets/ui.dart';
 import '../festival/festival_state.dart';
 import '../festival/festival_widgets.dart';
+import '../../core/utils/launch.dart';
+import '../../core/widgets/motion.dart';
+import 'listing_decor.dart';
 import 'listing_widgets.dart';
 
 /// pages/[language]/[location]/pooja/index.jsx, and with [categorySlug]
@@ -34,6 +37,15 @@ class PoojaListingPage extends ConsumerStatefulWidget {
 class _PoojaListingPageState extends ConsumerState<PoojaListingPage> {
   static const _recordsPerPage = 12;
   final _filters = ListingFilters();
+
+  /// What the API query is built from: chips and the slider update [_filters]
+  /// (and the screen) at once; this copy follows 350 ms after the last change.
+  ListingFilters _committed = ListingFilters();
+  Timer? _commitTimer;
+  static const _filterDebounce = Duration(milliseconds: 350);
+
+  /// Bumped when a new result set lands, so the grid entrance replays.
+  int _generation = 0;
   final _scroll = ScrollController();
   List<Json> _items = [];
   bool _loading = true;
@@ -57,6 +69,7 @@ class _PoojaListingPageState extends ConsumerState<PoojaListingPage> {
   @override
   void dispose() {
     _debounce?.cancel();
+    _commitTimer?.cancel();
     _scroll.dispose();
     super.dispose();
   }
@@ -79,12 +92,12 @@ class _PoojaListingPageState extends ConsumerState<PoojaListingPage> {
     }
     final q = <String>[
       'pageSize=$_recordsPerPage',
-      'sort=${_filters.sortBy.replaceFirst('-', '_')}',
+      'sort=${_committed.sortBy.replaceFirst('-', '_')}',
       'projection=PLP',
-      'minPrice=${_filters.priceRange.start.round()}',
-      'maxPrice=${_filters.priceRange.end.round()}',
+      'minPrice=${_committed.priceRange.start.round()}',
+      'maxPrice=${_committed.priceRange.end.round()}',
       if (widget.categorySlug != null) 'category=${Uri.encodeQueryComponent(widget.categorySlug!)}',
-      for (final c in _filters.categories)
+      for (final c in _committed.categories)
         if (c != widget.categorySlug) 'category=${Uri.encodeQueryComponent(c)}',
       'language=$languageId',
       'location=$locationId',
@@ -119,6 +132,7 @@ class _PoojaListingPageState extends ConsumerState<PoojaListingPage> {
       _items = page?.items ?? [];
       _totalItems = page?.total ?? 0;
       _loading = false;
+      _generation++;
     });
     if (page != null) _checkFill();
   }
@@ -166,7 +180,27 @@ class _PoojaListingPageState extends ConsumerState<PoojaListingPage> {
     }
   }
 
-  void _changed() => setState(() {});
+  /// Updates the screen now; the fetch waits [_filterDebounce] after the
+  /// last change (two quick chip taps or a slider drag = one request).
+  /// [instant] skips the wait (Clear all).
+  void _changed({bool instant = false}) {
+    _commitTimer?.cancel();
+    if (instant) {
+      _committed = _filters.copy();
+      setState(() {});
+      return;
+    }
+    setState(() {});
+    _commitTimer = Timer(_filterDebounce, () {
+      if (mounted) setState(() => _committed = _filters.copy());
+    });
+  }
+
+  void _toggleCategory(String c) {
+    _filters.categories =
+        _filters.categories.contains(c) ? (_filters.categories.toList()..remove(c)) : [..._filters.categories, c];
+    _changed();
+  }
 
   void _clearAll() {
     _filters
@@ -176,11 +210,33 @@ class _PoojaListingPageState extends ConsumerState<PoojaListingPage> {
       ..search = ''
       ..sortBy = 'popular';
     _debouncedSearch = '';
-    _changed();
+    _changed(instant: true);
   }
 
   void _open(Json p) =>
       context.push('/${widget.language.toLowerCase()}/${widget.location.toLowerCase()}/pooja/${str(p['slug'])}');
+
+  /// Trust band goes after the first 8 cards when there are more than 10.
+  static const _trustAfter = 8;
+  bool get _showTrustBand => _totalItems > 10 && _items.length > _trustAfter;
+  int get _rows => (_items.length / 2).ceil();
+
+  Widget _trustBand() => Padding(
+        padding: const EdgeInsets.only(bottom: 32),
+        child: Reveal(
+          child: TrustBand(
+            language: widget.language,
+            location: widget.location,
+            pageReference: pageReference('/${widget.language.toLowerCase()}/${widget.location.toLowerCase()}/pooja'),
+          ),
+        ),
+      );
+
+  /// First 8 cards fade and rise in a quick stagger (45 ms apart); later ones
+  /// rise as they scroll into view. Replays for every new result set.
+  Widget _entrance(int index, Widget child) => index < 8
+      ? RiseIn(key: ValueKey('g$_generation-$index'), delay: Duration(milliseconds: 45 * index), child: child)
+      : Reveal(key: ValueKey('g$_generation-$index'), child: child);
 
   @override
   Widget build(BuildContext context) {
@@ -214,23 +270,34 @@ class _PoojaListingPageState extends ConsumerState<PoojaListingPage> {
       bottomBar: const StickyMobileContact(),
       slivers: [
         SliverToBoxAdapter(
-          child: Padding(
-            padding: pad.copyWith(top: 16, bottom: 8),
-            child: Text(crumbs.toUpperCase(), style: AppText.body(size: 12, color: AppColors.mutedForeground, letterSpacing: .3)),
-          ),
-        ),
-        SliverToBoxAdapter(
-          child: Padding(
-            padding: pad.copyWith(bottom: 8),
-            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text(
-                cssCapitalize(
-                  '${isCategory ? widget.categorySlug!.replaceAll('-', ' ') : widget.language.replaceAll('-', ' ')} Pooja Services in ${widget.location.replaceAll('-', ' ')}',
-                ),
-                style: AppText.heading(size: 20),
+          child: ListingHeaderBand(
+            child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+              Padding(
+                padding: pad.copyWith(top: 16, bottom: 8),
+                child: Text(crumbs.toUpperCase(), style: AppText.body(size: 12, color: AppColors.mutedForeground, letterSpacing: .3)),
               ),
-              const SizedBox(height: 2),
-              Text('Showing $_totalItems sacred rituals available', style: AppText.body(size: 14, color: AppColors.mutedForeground)),
+              Padding(
+                padding: pad.copyWith(bottom: 8),
+                child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  Semantics(
+                    header: true,
+                    child: Text(
+                      cssCapitalize(
+                        '${isCategory ? widget.categorySlug!.replaceAll('-', ' ') : widget.language.replaceAll('-', ' ')} Pooja Services in ${widget.location.replaceAll('-', ' ')}',
+                      ),
+                      style: AppText.heading(size: 20),
+                    ),
+                  ),
+                  const SizedBox(height: 2),
+                  CountUpText(
+                    value: _totalItems,
+                    builder: (n) => 'Showing $n sacred rituals available',
+                    style: AppText.body(size: 14, color: AppColors.mutedForeground),
+                  ),
+                ]),
+              ),
+              if (!isCategory)
+                CategoryChips(categories: categories, selected: _filters.categories, onToggle: _toggleCategory),
             ]),
           ),
         ),
@@ -240,12 +307,7 @@ class _PoojaListingPageState extends ConsumerState<PoojaListingPage> {
             child: FilterBar(
               categories: categories,
               filters: _filters,
-              onCategoryToggle: (c) {
-                _filters.categories = _filters.categories.contains(c)
-                    ? (_filters.categories.toList()..remove(c))
-                    : [..._filters.categories, c];
-                _changed();
-              },
+              onCategoryToggle: _toggleCategory,
               onPriceChange: (v) {
                 _filters.priceRange = v;
                 _changed();
@@ -279,7 +341,7 @@ class _PoojaListingPageState extends ConsumerState<PoojaListingPage> {
               },
               onResetPrice: () {
                 _filters.priceRange = const RangeValues(3500, 21000);
-                _changed();
+                _changed(instant: true);
               },
               onClearAll: _clearAll,
             ),
@@ -288,7 +350,11 @@ class _PoojaListingPageState extends ConsumerState<PoojaListingPage> {
         SliverToBoxAdapter(
           child: Padding(
             padding: pad.copyWith(top: 8),
-            child: FestivalCollection(experience: exp, slotKey: isCategory ? 'category.context' : 'listing.collection'),
+            child: FestivalCollection(
+              experience: exp,
+              slotKey: isCategory ? 'category.context' : 'listing.collection',
+              hidden: _filters.search.trim().isNotEmpty || _filters.categories.isNotEmpty || _filters.durations.isNotEmpty,
+            ),
           ),
         ),
         SliverToBoxAdapter(
@@ -325,15 +391,34 @@ class _PoojaListingPageState extends ConsumerState<PoojaListingPage> {
                     )
                   : _listView
                       ? SliverList.builder(
-                          itemCount: _items.length,
-                          itemBuilder: (_, i) => Padding(
-                            padding: const EdgeInsets.only(bottom: 12),
-                            child: PoojaListTile(pooja: _items[i], onTap: () => _open(_items[i])),
-                          ),
+                          itemCount: _items.length + (_showTrustBand ? 1 : 0),
+                          itemBuilder: (_, i) {
+                            if (_showTrustBand && i == _trustAfter) return _trustBand();
+                            final k = _showTrustBand && i > _trustAfter ? i - 1 : i;
+                            return _entrance(
+                              k,
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 12),
+                                child: PoojaListTile(pooja: _items[k], onTap: () => _open(_items[k])),
+                              ),
+                            );
+                          },
                         )
                       : SliverList.builder(
-                          itemCount: (_items.length / 2).ceil(),
-                          itemBuilder: (_, row) => _PoojaGridRow(items: _items, row: row, onTap: _open),
+                          itemCount: _rows + (_showTrustBand ? 1 : 0),
+                          itemBuilder: (_, row) {
+                            const bandRow = _trustAfter ~/ 2;
+                            if (_showTrustBand && row == bandRow) return _trustBand();
+                            final r = _showTrustBand && row > bandRow ? row - 1 : row;
+                            return _PoojaGridRow(
+                              items: _items,
+                              row: r,
+                              onTap: _open,
+                              language: widget.language,
+                              location: widget.location,
+                              wrap: _entrance,
+                            );
+                          },
                         ),
         ),
         if (!_loading && _hasMore)
@@ -347,20 +432,31 @@ class _PoojaListingPageState extends ConsumerState<PoojaListingPage> {
 
 /// One row of `grid grid-cols-2 gap-3` with natural row heights.
 class _PoojaGridRow extends StatelessWidget {
-  const _PoojaGridRow({required this.items, required this.row, required this.onTap});
+  const _PoojaGridRow({
+    required this.items,
+    required this.row,
+    required this.onTap,
+    required this.language,
+    required this.location,
+    required this.wrap,
+  });
   final List<Json> items;
   final int row;
   final ValueChanged<Json> onTap;
+  final String language;
+  final String location;
+  final Widget Function(int index, Widget child) wrap;
 
   @override
   Widget build(BuildContext context) {
     final i = row * 2;
+    Widget card(int k) => wrap(k, PoojaCard(pooja: items[k], onTap: () => onTap(items[k]), language: language, location: location));
     return Padding(
       padding: const EdgeInsets.only(bottom: 12 + 20),
       child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Expanded(child: PoojaCard(pooja: items[i], onTap: () => onTap(items[i]))),
+        Expanded(child: card(i)),
         const SizedBox(width: 12),
-        Expanded(child: i + 1 < items.length ? PoojaCard(pooja: items[i + 1], onTap: () => onTap(items[i + 1])) : const SizedBox()),
+        Expanded(child: i + 1 < items.length ? card(i + 1) : const SizedBox()),
       ]),
     );
   }

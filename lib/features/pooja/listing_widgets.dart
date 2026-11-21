@@ -8,7 +8,13 @@ import '../../core/theme/app_text.dart';
 import '../../core/utils/format.dart';
 import '../../core/utils/json.dart';
 import '../../core/utils/nav.dart';
+import '../../core/api/bmp_api.dart';
+import '../../core/config.dart';
+import '../../core/storage/cookies.dart';
+import '../../core/utils/launch.dart';
+import '../../core/widgets/toast.dart';
 import '../../core/widgets/form_fields.dart';
+import '../../core/widgets/motion.dart';
 import '../../core/widgets/site_image.dart';
 import '../../core/widgets/native.dart';
 import '../../core/widgets/ui.dart';
@@ -21,9 +27,13 @@ import '../festival/ornaments.dart';
 // ---------------------------------------------------------------------------
 
 class PoojaCard extends StatelessWidget {
-  const PoojaCard({super.key, required this.pooja, required this.onTap});
+  const PoojaCard({super.key, required this.pooja, required this.onTap, this.language, this.location});
   final Json pooja;
   final VoidCallback onTap;
+
+  /// The current route's language/location, used for the share link.
+  final String? language;
+  final String? location;
 
   static const _ornaments = ['/icons/Group6903.svg', '/icons/Group6899.svg'];
 
@@ -32,81 +42,195 @@ class PoojaCard extends StatelessWidget {
     final media = objList(pooja['media']);
     final image = media.isNotEmpty ? strOrNull(media.first['mediaUrl']) : null;
     final price = pooja['price'];
-    // RandomImageComponent picks one of two ornaments per render.
-    final ornament = _ornaments[(str(pooja['_id']).hashCode).abs() % 2];
+    // Same swirl for a pooja every time (seeded by its slug, as on the web).
+    final ornament = _ornaments[swirlHash(str(pooja['slug'], str(pooja['_id']))) % _ornaments.length];
     final ornamentStyle = ornament == _ornaments[0] ? const EdgeInsets.only(top: 0) : const EdgeInsets.only(top: 19, bottom: 65);
 
-    return GestureDetector(
-      onTap: onTap,
-      child: Stack(
-        clipBehavior: Clip.none,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              AspectRatio(
-                aspectRatio: 1,
-                child: Container(
-                  clipBehavior: Clip.antiAlias,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(8),
-                    boxShadow: const [
-                      BoxShadow(color: Color(0x1A000000), blurRadius: 6, offset: Offset(0, 4), spreadRadius: -1),
-                      BoxShadow(color: Color(0x1A000000), blurRadius: 4, offset: Offset(0, 2), spreadRadius: -2),
-                    ],
+    return Semantics(
+      link: true,
+      label: '${str(pooja['name'])}${truthy(price) ? ', packages from ₹${formatAmountPutComma(price)}' : ''}',
+      child: PressScale(
+        onTap: onTap,
+        child: Stack(
+          clipBehavior: Clip.none,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                AspectRatio(
+                  aspectRatio: 1,
+                  child: Container(
+                    clipBehavior: Clip.antiAlias,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(8),
+                      boxShadow: const [
+                        BoxShadow(color: Color(0x1A000000), blurRadius: 6, offset: Offset(0, 4), spreadRadius: -1),
+                        BoxShadow(color: Color(0x1A000000), blurRadius: 4, offset: Offset(0, 2), spreadRadius: -2),
+                      ],
+                    ),
+                    child: Stack(fit: StackFit.expand, children: [
+                      SiteImage(image ?? '/images/aigenerated/Deities.jpeg', fit: BoxFit.contain, placeholderColor: Colors.white),
+                      Positioned(
+                        right: 6,
+                        bottom: 6,
+                        child: Column(children: [
+                          _CardAction(
+                            icon: LucideIcons.heart,
+                            label: 'Add to wishlist',
+                            pop: true,
+                            onTap: () => addPoojaToWishlist(pooja),
+                          ),
+                          const SizedBox(height: 6),
+                          _CardAction(icon: LucideIcons.share2, label: 'Share on WhatsApp', onTap: _share),
+                        ]),
+                      ),
+                    ]),
                   ),
-                  child: SiteImage(image ?? '/images/aigenerated/Deities.jpeg', fit: BoxFit.contain, placeholderColor: Colors.white),
                 ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                str(pooja['name']),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: AppText.poppins(size: 16, weight: FontWeight.w600, color: AppColors.bluntRed, height: 1.25),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                truthy(price) ? 'Packages Starting From' : 'Price On Request',
-                style: AppText.poppins(size: 12, weight: FontWeight.w500, color: AppColors.gray600),
-              ),
-              if (truthy(price))
+                const SizedBox(height: 8),
                 Text(
-                  '₹ ${formatAmountPutComma(price)}',
-                  style: AppText.poppins(size: 16, weight: FontWeight.w700, color: AppColors.bluntRed),
+                  str(pooja['name']),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppText.poppins(size: 16, weight: FontWeight.w600, color: AppColors.bluntRed, height: 1.25),
                 ),
-              const SizedBox(height: 12),
-            ],
-          ),
-          Positioned(
-            top: -20,
-            left: 0,
-            right: 0,
-            child: IgnorePointer(
-              child: SizedBox(
-                height: 48,
-                child: OverflowBox(
-                  maxHeight: 96,
-                  alignment: Alignment.topCenter,
-                  child: Padding(
-                    padding: ornamentStyle,
-                    child: SiteImage(
-                      ornament,
-                      width: 96,
-                      height: 96 - ornamentStyle.vertical,
-                      fit: BoxFit.contain,
-                      placeholderColor: Colors.transparent,
+                const SizedBox(height: 8),
+                Text(
+                  truthy(price) ? 'Packages Starting From' : 'Price On Request',
+                  style: AppText.poppins(size: 12, weight: FontWeight.w500, color: AppColors.gray600),
+                ),
+                if (truthy(price))
+                  Text(
+                    '₹ ${formatAmountPutComma(price)}',
+                    style: AppText.poppins(size: 16, weight: FontWeight.w700, color: AppColors.bluntRed),
+                  ),
+                const SizedBox(height: 12),
+              ],
+            ),
+            Positioned(
+              top: -20,
+              left: 0,
+              right: 0,
+              child: IgnorePointer(
+                child: SizedBox(
+                  height: 48,
+                  child: OverflowBox(
+                    maxHeight: 96,
+                    alignment: Alignment.topCenter,
+                    child: Padding(
+                      padding: ornamentStyle,
+                      child: SiteImage(
+                        ornament,
+                        width: 96,
+                        height: 96 - ornamentStyle.vertical,
+                        fit: BoxFit.contain,
+                        placeholderColor: Colors.transparent,
+                      ),
                     ),
                   ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
+
+  /// Falls back to the current route's language/location (the web card used
+  /// to share /undefined/undefined/pooja/…).
+  void _share() {
+    final lang = strOrNull(pooja['linkLanguage']) ?? language;
+    final loc = strOrNull(pooja['linkLocation']) ?? location;
+    final slug = str(pooja['slug']);
+    final path = lang != null && loc != null && lang.isNotEmpty && loc.isNotEmpty
+        ? '/${lang.toLowerCase()}/${loc.toLowerCase()}/pooja/$slug'
+        : '/pooja/$slug';
+    openExternal(
+      'https://wa.me/?text=${Uri.encodeComponent('Hi, I am planning to book this puja ${AppConfig.siteUrl}$path. Please respond to me on whatsapp here')}',
+    );
+  }
+}
+
+/// PoojaRandomDesignImageComponent `hashOf`: `(h * 31 + code) >>> 0`, from 7.
+int swirlHash(String seed) {
+  var h = 7;
+  for (final c in seed.codeUnits) {
+    h = (h * 31 + c) & 0xFFFFFFFF;
+  }
+  return h;
+}
+
+Future<void> addPoojaToWishlist(Json pooja) async {
+  if (Cookies.get('accessToken') == null) {
+    Toast.show('You are not logged in. Please login to add items to wishlist ');
+    return;
+  }
+  try {
+    final r = await BmpApi.addToWishlist({'poojaId': pooja['_id']});
+    final d = obj(r.data);
+    if (r.statusCode == 201 && intOf(d['statusCode']) == 200) {
+      Toast.success(str(d['message']));
+    } else {
+      Toast.show(str(d['error']));
+    }
+  } catch (_) {
+    Toast.error('Error fetching wishlist API');
+  }
+}
+
+/// Wishlist / share bubble on the card image — always visible (they were
+/// hover-only on the web, so phone users never saw them). The heart pops.
+class _CardAction extends StatefulWidget {
+  const _CardAction({required this.icon, required this.label, required this.onTap, this.pop = false});
+  final IconData icon;
+  final String label;
+  final VoidCallback onTap;
+  final bool pop;
+
+  @override
+  State<_CardAction> createState() => _CardActionState();
+}
+
+class _CardActionState extends State<_CardAction> with SingleTickerProviderStateMixin {
+  late final AnimationController _c = AnimationController(vsync: this, duration: const Duration(milliseconds: 450));
+
+  @override
+  void dispose() {
+    _c.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => Semantics(
+        button: true,
+        label: widget.label,
+        child: GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: () {
+            if (widget.pop && !reduceMotion(context)) _c.forward(from: 0);
+            widget.onTap();
+          },
+          child: Container(
+            width: 32,
+            height: 32,
+            alignment: Alignment.center,
+            decoration: const BoxDecoration(
+              color: Color(0xE6FFFFFF),
+              shape: BoxShape.circle,
+              boxShadow: [BoxShadow(color: Color(0x26000000), blurRadius: 6, offset: Offset(0, 2))],
+            ),
+            child: ScaleTransition(
+              scale: TweenSequence([
+                TweenSequenceItem(tween: Tween(begin: 1.0, end: 1.35), weight: 40),
+                TweenSequenceItem(tween: Tween(begin: 1.35, end: 1.0), weight: 60),
+              ]).animate(CurvedAnimation(parent: _c, curve: Curves.easeOut)),
+              child: Icon(widget.icon, size: 16, color: AppColors.bluntRed),
+            ),
+          ),
+        ),
+      );
 }
 
 /// List-view row of [PoojaCard]: thumbnail left, name and price right.
@@ -120,7 +244,7 @@ class PoojaListTile extends StatelessWidget {
     final media = objList(pooja['media']);
     final image = media.isNotEmpty ? strOrNull(media.first['mediaUrl']) : null;
     final price = pooja['price'];
-    return GestureDetector(
+    return PressScale(
       onTap: onTap,
       child: Container(
         padding: const EdgeInsets.all(10),
@@ -371,6 +495,14 @@ class ListingFilters {
   String search;
 
   bool get hasPriceFilter => priceRange.start > 3500 || priceRange.end < 21000;
+
+  ListingFilters copy() => ListingFilters(
+        categories: [...categories],
+        priceRange: priceRange,
+        durations: [...durations],
+        sortBy: sortBy,
+        search: search,
+      );
   int get activeCount => categories.length + durations.length + (hasPriceFilter ? 1 : 0);
 }
 
@@ -743,23 +875,145 @@ class ActiveFilters extends StatelessWidget {
 // festival/FestivalCollection.jsx
 // ---------------------------------------------------------------------------
 
-class FestivalCollection extends StatelessWidget {
-  const FestivalCollection({super.key, required this.experience, required this.slotKey});
+/// Collapsed by default to a ~64px bar (diya, title + option count,
+/// "From ₹…" + subtitle, 3 thumbnails, Show/Hide chevron); opening it reveals
+/// the cards with a smooth height animation, cards rising in one after
+/// another. A light shine sweeps the bar once. The open/closed choice is
+/// remembered per campaign. [hidden] tucks it away entirely (search or
+/// filters active). On phones "See all" lives inside the opened panel.
+class FestivalCollection extends StatefulWidget {
+  const FestivalCollection({super.key, required this.experience, required this.slotKey, this.hidden = false});
   final Json? experience;
   final String slotKey;
+  final bool hidden;
+
+  @override
+  State<FestivalCollection> createState() => _FestivalCollectionState();
+}
+
+class _FestivalCollectionState extends State<FestivalCollection> with SingleTickerProviderStateMixin {
+  bool _open = false;
+  String? _loadedFor;
+  late final AnimationController _shine = AnimationController(vsync: this, duration: const Duration(milliseconds: 1600));
+
+  String? get _campaignId => widget.experience == null ? null : strOrNull(pick(widget.experience, ['primaryCampaign', 'id']));
+
+  void _restore() {
+    final id = _campaignId;
+    if (id == null || id == _loadedFor) return;
+    _loadedFor = id;
+    _open = Cookies.prefs.getString('fx_rail_open_$id') == '1';
+    if (!reduceMotion(context)) {
+      Future.delayed(const Duration(milliseconds: 400), () {
+        if (mounted) _shine.forward(from: 0);
+      });
+    }
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _restore();
+  }
+
+  @override
+  void didUpdateWidget(covariant FestivalCollection oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _restore();
+  }
+
+  @override
+  void dispose() {
+    _shine.dispose();
+    super.dispose();
+  }
+
+  void _toggle() {
+    setState(() => _open = !_open);
+    final id = _campaignId;
+    if (id != null) Cookies.prefs.setString('fx_rail_open_$id', _open ? '1' : '0');
+  }
 
   @override
   Widget build(BuildContext context) {
-    final exp = experience;
-    final poojas = exp == null ? const <Json>[] : objList(exp['poojas']).take(4).toList();
-    if (exp == null || poojas.isEmpty) return const SizedBox.shrink();
+    final exp = widget.experience;
+    final all = exp == null ? const <Json>[] : objList(exp['poojas']);
+    final poojas = all.take(4).toList();
+    if (exp == null || poojas.isEmpty || widget.hidden || exp['primaryCampaign'] == null) return const SizedBox.shrink();
     final campaign = exp.fxCampaign;
     final t = exp.fxTheme;
     final activeDay = exp['activeDay'] is Map ? obj(exp['activeDay']) : null;
     final subtitle = activeDay != null
         ? '${str(activeDay['label'])} · ${str(activeDay['name'])}'
         : (strOrNull(pick(exp, ['copy', 'eyebrow'])) ?? str(campaign['name']));
+    final prices = all.map((p) => num.tryParse('${p['startingPrice'] ?? ''}') ?? 0).where((n) => n > 0).toList()..sort();
+    final fromPrice = prices.isEmpty ? null : prices.first;
+    final uniqueCount = all.map((p) => '${str(p['slug'])}|${str(p['linkLocation'])}|${str(p['linkLanguage'])}').toSet().length;
+    final thumbs = poojas.where((p) => strOrNull(p['image']) != null).take(3).toList();
     final cardWidth = math.min(MediaQuery.sizeOf(context).width * .62, 240.0);
+    final wide = MediaQuery.sizeOf(context).width >= 640;
+    final dur = reduceMotion(context) ? Duration.zero : const Duration(milliseconds: 500);
+
+    Widget seeAll() => GestureDetector(
+          onTap: () => goHref(context, str(campaign['landingHref'])),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+            decoration: BoxDecoration(color: t.accent, borderRadius: BorderRadius.circular(999)),
+            child: Text('See all', style: AppText.sans(size: 12, weight: FontWeight.w700, color: t.accentFg)),
+          ),
+        );
+
+    final cards = <Widget>[
+      for (var i = 0; i < poojas.length; i++)
+        Padding(
+          padding: const EdgeInsets.only(right: 12),
+          child: SizedBox(
+            width: cardWidth,
+            child: _open
+                ? RiseIn(
+                    delay: Duration(milliseconds: 80 * i),
+                    child: FestivalPoojaCard(experience: exp, pooja: poojas[i], slotKey: widget.slotKey, compact: true),
+                  )
+                : FestivalPoojaCard(experience: exp, pooja: poojas[i], slotKey: widget.slotKey, compact: true),
+          ),
+        ),
+      SizedBox(
+        width: cardWidth,
+        child: RiseIn(
+          key: ValueKey('cb$_open'),
+          delay: Duration(milliseconds: 80 * poojas.length),
+          child: GestureDetector(
+            onTap: () => openFestivalCallback(context, exp, slot: '${widget.slotKey}.callback'),
+            child: Container(
+              constraints: const BoxConstraints(minHeight: 180),
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: t.accent.o(.1),
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: t.accent.o(.7)),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Icon(LucideIcons.phoneCall, size: 28, color: t.accent),
+                  Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                    Text("Can't decide?", style: AppText.heading(size: 16, color: t.fg)),
+                    const SizedBox(height: 4),
+                    Text('A pandit will call you in 10 min and suggest the right puja.', style: AppText.sans(size: 12, color: t.muted)),
+                  ]),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    decoration: BoxDecoration(color: t.accent, borderRadius: BorderRadius.circular(999)),
+                    child: Text('Get a call back', style: AppText.sans(size: 12, weight: FontWeight.w700, color: t.accentFg)),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    ];
 
     return Container(
       clipBehavior: Clip.antiAlias,
@@ -767,129 +1021,131 @@ class FestivalCollection extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [t.bg, const Color(0xFF5C1820)]),
       ),
-      child: Stack(
-        children: [
-          Positioned(
-            right: -80,
-            top: -96,
-            child: Container(
-              width: 256,
-              height: 256,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                gradient: RadialGradient(colors: [t.bg2.o(.6), t.bg2.o(0)]),
-              ),
+      child: Stack(children: [
+        Positioned(
+          right: -80,
+          top: -96,
+          child: Container(
+            width: 256,
+            height: 256,
+            decoration: BoxDecoration(shape: BoxShape.circle, gradient: RadialGradient(colors: [t.bg2.o(.6), t.bg2.o(0)])),
+          ),
+        ),
+        // One-off shine sweep across the bar.
+        Positioned.fill(
+          child: IgnorePointer(
+            child: AnimatedBuilder(
+              animation: _shine,
+              builder: (_, _) {
+                if (!_shine.isAnimating) return const SizedBox.shrink();
+                final v = Curves.easeOut.transform(_shine.value);
+                return FractionallySizedBox(
+                  alignment: Alignment(-1.6 + 3.2 * v, 0),
+                  widthFactor: .33,
+                  child: Transform(
+                    transform: Matrix4.skewX(-.2),
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(colors: [Colors.white.o(0), Colors.white.o(.15), Colors.white.o(0)]),
+                      ),
+                    ),
+                  ),
+                );
+              },
             ),
           ),
+        ),
+        Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Row(
-                    children: [
+            padding: const EdgeInsets.fromLTRB(16, 12, 12, 12),
+            child: Row(children: [
+              Expanded(
+                child: Semantics(
+                  button: true,
+                  expanded: _open,
+                  child: GestureDetector(
+                    behavior: HitTestBehavior.opaque,
+                    onTap: _toggle,
+                    child: Row(children: [
                       const DiyaIcon(size: 24),
                       const SizedBox(width: 10),
                       Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              festivalPoojaHeading(exp),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: AppText.heading(size: 18, color: t.fg),
-                            ),
-                            Text(
-                              subtitle,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: AppText.sans(size: 12, color: t.muted),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      GestureDetector(
-                        onTap: () => goHref(context, str(campaign['landingHref'])),
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
-                          decoration: BoxDecoration(color: t.accent, borderRadius: BorderRadius.circular(999)),
-                          child: Text(
-                            'See all',
-                            style: AppText.sans(size: 12, weight: FontWeight.w700, color: t.accentFg),
+                        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                          Text.rich(
+                            TextSpan(children: [
+                              TextSpan(text: festivalPoojaHeading(exp)),
+                              TextSpan(
+                                text: '  · $uniqueCount options',
+                                style: AppText.sans(size: 12, weight: FontWeight.w600, color: t.muted),
+                              ),
+                            ]),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: AppText.heading(size: 16, weight: FontWeight.w700, color: t.fg),
                           ),
-                        ),
+                          Text(
+                            [if (fromPrice != null) 'From ₹${formatIndianNumber(fromPrice.round())}', subtitle].join(' · '),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: AppText.sans(size: 12, color: t.muted),
+                          ),
+                        ]),
                       ),
-                    ],
+                      if (thumbs.isNotEmpty) ...[
+                        const SizedBox(width: 8),
+                        SizedBox(
+                          width: 28.0 + 18 * (thumbs.length - 1),
+                          height: 28,
+                          child: Stack(children: [
+                            for (var i = 0; i < thumbs.length; i++)
+                              Positioned(
+                                left: 18.0 * i,
+                                child: Container(
+                                  width: 28,
+                                  height: 28,
+                                  clipBehavior: Clip.antiAlias,
+                                  decoration: BoxDecoration(shape: BoxShape.circle, border: Border.all(color: t.bg, width: 2)),
+                                  child: SiteImage(str(thumbs[i]['image']), fit: BoxFit.cover),
+                                ),
+                              ),
+                          ]),
+                        ),
+                      ],
+                      const SizedBox(width: 6),
+                      if (wide) Text(_open ? 'Hide' : 'Show', style: AppText.sans(size: 12, weight: FontWeight.w600, color: t.fg)),
+                      AnimatedRotation(
+                        turns: _open ? .5 : 0,
+                        duration: const Duration(milliseconds: 300),
+                        child: Icon(LucideIcons.chevronDown, size: 18, color: t.fg),
+                      ),
+                    ]),
                   ),
                 ),
-                const SizedBox(height: 12),
-                SizedBox(
-                  height: 260,
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    children: [
-                      for (final p in poojas)
-                        Padding(
-                          padding: const EdgeInsets.only(right: 12),
-                          child: SizedBox(
-                            width: cardWidth,
-                            child: FestivalPoojaCard(experience: exp, pooja: p, slotKey: slotKey, compact: true),
-                          ),
-                        ),
-                      SizedBox(
-                        width: cardWidth,
-                        child: GestureDetector(
-                          onTap: () => openFestivalCallback(context, exp, slot: '$slotKey.callback'),
-                          child: Container(
-                            constraints: const BoxConstraints(minHeight: 180),
-                            padding: const EdgeInsets.all(16),
-                            decoration: BoxDecoration(
-                              color: t.accent.o(.1),
-                              borderRadius: BorderRadius.circular(16),
-                              border: Border.all(color: t.accent.o(.7)),
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Icon(LucideIcons.phoneCall, size: 28, color: t.accent),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text("Can't decide?", style: AppText.heading(size: 16, color: t.fg)),
-                                    const SizedBox(height: 4),
-                                    Text(
-                                      'A pandit will call you in 10 min and suggest the right puja.',
-                                      style: AppText.sans(size: 12, color: t.muted),
-                                    ),
-                                  ],
-                                ),
-                                Container(
-                                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                                  decoration: BoxDecoration(color: t.accent, borderRadius: BorderRadius.circular(999)),
-                                  child: Text(
-                                    'Get a call back',
-                                    style: AppText.sans(size: 12, weight: FontWeight.w700, color: t.accentFg),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+              ),
+              if (wide) ...[const SizedBox(width: 10), seeAll()],
+            ]),
           ),
-        ],
-      ),
+          AnimatedSize(
+            duration: dur,
+            curve: Curves.easeOut,
+            alignment: Alignment.topCenter,
+            child: !_open
+                ? const SizedBox(width: double.infinity)
+                : Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+                    SizedBox(
+                      height: 260,
+                      child: ListView(scrollDirection: Axis.horizontal, padding: const EdgeInsets.symmetric(horizontal: 16), children: cards),
+                    ),
+                    if (!wide)
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
+                        child: Align(alignment: Alignment.centerLeft, child: seeAll()),
+                      ),
+                    const SizedBox(height: 16),
+                  ]),
+          ),
+        ]),
+      ]),
     );
   }
 }

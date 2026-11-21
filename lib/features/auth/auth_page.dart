@@ -105,6 +105,10 @@ class _AuthPageState extends ConsumerState<AuthPage> {
   }
 
   Future<void> _sendOtp() async {
+    // Each send makes MSG91 issue a new code and invalidate the previous one,
+    // so a double send (keyboard Done + button tap) means the SMS the user
+    // reads first no longer verifies.
+    if (_loading) return;
     final v = _validate(_phone);
     if (!v.ok) {
       setState(() => _error = v.error);
@@ -117,6 +121,7 @@ class _AuthPageState extends ConsumerState<AuthPage> {
     try {
       final r = await BmpApi.sendPhoneOtp('+91-$_phone');
       final d = obj(r.data);
+      debugPrint('SEND OTP: http=${r.statusCode} status=${d['statusCode']} message=${d['message']}');
       if (r.statusCode == 201 && intOf(d['statusCode']) == 200) {
         Toast.success(strOrNull(d['message']) ?? 'OTP sent successfully');
         setState(() {
@@ -146,28 +151,40 @@ class _AuthPageState extends ConsumerState<AuthPage> {
   }
 
   Future<void> _verifyOtp() async {
+    // MSG91 consumes a code on first successful verify; a second concurrent
+    // call (auto-verify on 6 digits + button / repeated onChanged from SMS
+    // autofill) comes back as an error and would show "Invalid OTP".
+    if (_loading) return;
     if (_otp.length != _otpLength) {
       setState(() => _error = 'Please enter a valid 6-digit OTP');
       return;
     }
+    final otp = _otp;
     setState(() {
       _loading = true;
       _error = '';
     });
     try {
-      final r = await BmpApi.verifyPhoneOtp('+91-$_phone', _otp, null);
+      final r = await BmpApi.verifyPhoneOtp('+91-$_phone', otp, null);
       final d = obj(r.data);
+      debugPrint('VERIFY OTP: http=${r.statusCode} status=${d['statusCode']} error=${d['error']}');
       if (r.statusCode == 201 && intOf(d['statusCode']) == 200) {
         Toast.success(strOrNull(d['message']) ?? 'OTP verified successfully');
         Cookies.set('accessToken', str(pick(d, ['body', 'accessToken'])));
         await _afterLogin();
       } else {
-        throw Exception(strOrNull(d['error']) ?? 'Invalid OTP');
+        throw Exception(strOrNull(d['error']) ?? strOrNull(d['message']) ?? 'Invalid OTP');
       }
     } catch (e) {
-      final msg = e is Exception && e.toString().startsWith('Exception: ') ? e.toString().substring(11) : 'Invalid OTP. Please try again.';
+      debugPrint('VERIFY OTP ERROR: $e');
+      if (e is DioException) {
+        debugPrint('STATUS: ${e.response?.statusCode} BODY: ${e.response?.data}');
+      }
+      final msg = e is Exception && e.toString().startsWith('Exception: ')
+          ? e.toString().substring(11)
+          : apiErrorMessage(e, 'Could not verify OTP. Please check your connection and try again.');
       Toast.error(msg);
-      setState(() => _error = msg);
+      if (mounted) setState(() => _error = msg);
     } finally {
       if (mounted) setState(() => _loading = false);
     }

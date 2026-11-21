@@ -9,8 +9,11 @@ import '../utils/launch.dart';
 /// paragraphs `text-sm leading-5 py-2`, lists are disc/decimal with
 /// `pl-5`, and `<strong>` becomes `font-semibold`.
 class PoojaHtml extends StatelessWidget {
-  const PoojaHtml(this.html, {super.key, this.fontSize = 14, this.color = const Color(0xFF475569), this.textAlign});
+  const PoojaHtml(this.html, {super.key, this.fontSize = 14, this.color = const Color(0xFF475569), this.textAlign, this.sans = false});
   final String? html;
+
+  /// DM Sans body text (the PDP description) instead of Poppins.
+  final bool sans;
   final double fontSize;
   final Color color;
   final TextAlign? textAlign;
@@ -21,7 +24,9 @@ class PoojaHtml extends StatelessWidget {
     if (h == null || h.isEmpty) return const SizedBox.shrink();
     return HtmlWidget(
       h,
-      textStyle: AppText.poppins(size: fontSize, color: color, height: 20 / 14, letterSpacing: .3),
+      textStyle: sans
+          ? AppText.body(size: fontSize, color: color, height: 1.6)
+          : AppText.poppins(size: fontSize, color: color, height: 20 / 14, letterSpacing: .3),
       customStylesBuilder: (e) {
         switch (e.localName) {
           case 'h1':
