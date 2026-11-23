@@ -4,12 +4,16 @@ import 'dart:io' show Platform;
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
+import 'package:go_router/go_router.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:uuid/uuid.dart';
 
 import '../api/bmp_api.dart';
 import '../storage/cookies.dart';
 import '../utils/json.dart';
+import '../utils/launch.dart';
+import '../widgets/toast.dart';
 
 /// Runs in its own isolate when a message arrives while the app is in the
 /// background or terminated. Messages with a `notification` block are shown
@@ -31,6 +35,10 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 ///   `DELETE /device-tokens`, then the token is deleted on the device so the
 ///   next account to sign in gets a fresh one.
 ///
+/// * [attachRouter] once the router exists: notification taps (background
+///   and terminated) open `data.link`; messages arriving while the app is
+///   open show an in-app banner (iOS also shows the system banner).
+///
 /// The backend upserts by token, so registering twice never duplicates.
 class PushNotifications {
   PushNotifications._();
@@ -40,6 +48,8 @@ class PushNotifications {
   static const _installIdKey = 'pushInstallId';
 
   bool _enabled = false;
+  GoRouter? _router;
+  RemoteMessage? _pendingOpen;
   bool _signedIn = false;
 
   /// FCM token + access token last registered, to skip identical calls.
@@ -64,6 +74,76 @@ class PushNotifications {
     _messaging.onTokenRefresh.listen((token) {
       if (_signedIn) _register(token);
     });
+
+    // iOS: show the system banner for messages that arrive in the foreground.
+    try {
+      await _messaging.setForegroundNotificationPresentationOptions(
+        alert: true,
+        badge: true,
+        sound: true,
+      );
+    } catch (e) {
+      debugPrint('[push] foreground presentation options failed: $e');
+    }
+    FirebaseMessaging.onMessage.listen(_onForegroundMessage);
+    // Tapped while the app was in the background.
+    FirebaseMessaging.onMessageOpenedApp.listen(_openMessage);
+    // Tapped while the app was terminated: opened once the router is attached.
+    try {
+      _pendingOpen = await _messaging.getInitialMessage();
+    } catch (e) {
+      debugPrint('[push] getInitialMessage failed: $e');
+    }
+  }
+
+  void attachRouter(GoRouter router) {
+    _router = router;
+    final pending = _pendingOpen;
+    _pendingOpen = null;
+    if (pending != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) => _openMessage(pending));
+    }
+  }
+
+  void _onForegroundMessage(RemoteMessage message) {
+    final n = message.notification;
+    if (n == null) return;
+    // iOS already shows the system banner (presentation options above).
+    if (!kIsWeb && Platform.isIOS) return;
+    final link = message.data['link'] as String?;
+    Toast.notification(
+      n.title ?? '',
+      n.body ?? '',
+      onOpen: link == null || link.isEmpty ? null : () => _openLink(link),
+    );
+  }
+
+  void _openMessage(RemoteMessage message) {
+    final link = message.data['link'];
+    if (link is String && link.isNotEmpty) _openLink(link);
+  }
+
+  /// Same rules as `goHref`: site paths and bookmypoojaonline.com URLs open
+  /// in the app, other URLs open externally.
+  void _openLink(String link) {
+    final router = _router;
+    if (link.startsWith('http')) {
+      final uri = Uri.tryParse(link);
+      final host = uri?.host ?? '';
+      if (host == 'bookmypoojaonline.com' || host == 'www.bookmypoojaonline.com') {
+        final path = uri!.path.isEmpty ? '/' : uri.path;
+        final query = uri.hasQuery ? '?${uri.query}' : '';
+        if (router != null) router.push('$path$query');
+        return;
+      }
+      openExternal(link);
+      return;
+    }
+    if (router == null) {
+      _pendingOpen = RemoteMessage(data: {'link': link});
+      return;
+    }
+    router.push(link.startsWith('/') ? link : '/$link');
   }
 
   /// [user] is `authProvider`'s value: null when signed out, `{}` when the

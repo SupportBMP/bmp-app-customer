@@ -37,6 +37,8 @@ class _BmpAppState extends ConsumerState<BmpApp> {
   void initState() {
     super.initState();
     ref.listenManual(authProvider, (_, _) => _authChanges.value++);
+    // Notification taps (incl. the one that launched the app) navigate here.
+    PushNotifications.instance.attachRouter(_router);
     // Registers / refreshes the FCM token for the signed-in user (BMP-16).
     ref.listenManual(
       authProvider,
