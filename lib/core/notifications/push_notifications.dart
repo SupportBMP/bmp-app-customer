@@ -39,6 +39,10 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 ///   and terminated) open `data.link`; messages arriving while the app is
 ///   open show an in-app banner (iOS also shows the system banner).
 ///
+/// Android stores the token on the user as `androidDeviceToken`: sent with
+/// the OTP login, filled in on app start when empty, updated on refresh.
+/// iOS registers through `POST /device-tokens`.
+///
 /// The backend upserts by token, so registering twice never duplicates.
 class PushNotifications {
   PushNotifications._();
@@ -72,7 +76,12 @@ class PushNotifications {
     _enabled = true;
     FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
     _messaging.onTokenRefresh.listen((token) {
-      if (_signedIn) _register(token);
+      if (!_signedIn) return;
+      if (_isAndroid) {
+        _saveAndroidDeviceToken(token);
+      } else {
+        _register(token);
+      }
     });
 
     // iOS: show the system banner for messages that arrive in the foreground.
@@ -157,8 +166,53 @@ class PushNotifications {
         accessToken.isNotEmpty;
     if (!_enabled || !_signedIn) return;
     // One sync at a time; the auth provider can emit twice around sign-in.
-    _pending ??= _syncToken().whenComplete(() => _pending = null);
+    _pending ??= (_isAndroid ? _syncAndroid(user!) : _syncToken())
+        .whenComplete(() => _pending = null);
     await _pending;
+  }
+
+  bool get _isAndroid => !kIsWeb && Platform.isAndroid;
+
+  /// This phone's FCM token on Android (null elsewhere, or if Firebase is
+  /// off). Sent with `/auth/otp/verify` so the login saves it on the user.
+  Future<String?> androidToken() async {
+    if (!_enabled || !_isAndroid) return null;
+    try {
+      final token = await _messaging.getToken().timeout(const Duration(seconds: 5));
+      if (kDebugMode) debugPrint('[push] FCM token: $token');
+      return token;
+    } catch (e) {
+      debugPrint('[push] getToken failed: $e');
+      return null;
+    }
+  }
+
+  /// Android: login already saved the token. For users signed in before this
+  /// build (or if that failed), fill `androidDeviceToken` when it is empty.
+  Future<void> _syncAndroid(Json user) async {
+    // Android 13+ needs the permission to *show* notifications; the token is
+    // saved either way.
+    try {
+      await _messaging.requestPermission();
+    } catch (e) {
+      debugPrint('[push] requestPermission failed: $e');
+    }
+    final saved = str(user['androidDeviceToken']).trim();
+    if (saved.isNotEmpty) {
+      debugPrint('[push] androidDeviceToken already set on user');
+      return;
+    }
+    final token = await androidToken();
+    if (token != null) await _saveAndroidDeviceToken(token);
+  }
+
+  Future<void> _saveAndroidDeviceToken(String token) async {
+    try {
+      final res = await BmpApi.updateUser({'androidDeviceToken': token});
+      debugPrint('[push] androidDeviceToken saved: ${obj(res.data)['statusCode']}');
+    } catch (e) {
+      debugPrint('[push] saving androidDeviceToken failed: $e');
+    }
   }
 
   Future<void> _syncToken() async {

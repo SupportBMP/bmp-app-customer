@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 
 import '../config.dart';
+import '../notifications/push_notifications.dart';
 import '../storage/cookies.dart';
 import 'api_client.dart';
 
@@ -149,23 +150,28 @@ class BmpApi {
   static Future<Response> verifyEmailOtp(String email, String otp, String? accessToken) =>
       _c.post(_u('/auth/email/verify-otp'), {'email': email, 'otp': otp}, accessToken);
 
+  /// On Android also sends this phone's FCM token, which BMP_BE saves as the
+  /// user's `androidDeviceToken` (latest login wins).
   static Future<Response> verifyPhoneOtp(
     String phone,
     String otp,
     String? accessToken, {
     String? cartId,
     String? guestUserId,
-  }) =>
-      _c.post(
-        _u('/auth/otp/verify'),
-        {
-          'phone': phone,
-          'otp': otp,
-          'cartId': ?cartId,
-          'guestUserId': ?guestUserId,
-        },
-        accessToken,
-      );
+  }) async {
+    final androidDeviceToken = await PushNotifications.instance.androidToken();
+    return _c.post(
+      _u('/auth/otp/verify'),
+      {
+        'phone': phone,
+        'otp': otp,
+        'cartId': ?cartId,
+        'guestUserId': ?guestUserId,
+        'androidDeviceToken': ?androidDeviceToken,
+      },
+      accessToken,
+    );
+  }
 
   static Future<Response> guestLogin() => _c.post(_u('/auth/guest-login'), {}, '');
 
