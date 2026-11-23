@@ -172,6 +172,16 @@ class BmpApi {
   static Future<Response> userDetails([String? accessToken]) =>
       _c.getAuth(_u('/auth'), accessToken ?? _token);
 
+  // ---- Push notifications (BMP-16) --------------------------------------
+
+  /// `{token, platform: android|ios, deviceId, appVersion}`; upserted by token.
+  static Future<Response> registerDeviceToken(Map<String, dynamic> data) =>
+      _c.post(_u('/device-tokens'), data, _token);
+
+  /// Logout. Takes the access token explicitly because it is about to be dropped.
+  static Future<Response> removeDeviceToken(String deviceToken, String accessToken) =>
+      _c.delete(_u('/device-tokens'), accessToken, {'token': deviceToken});
+
   static Future<Response> updateUser(Map<String, dynamic> data) =>
       _c.post(_u('/pooja-users/update'), data, _token);
 

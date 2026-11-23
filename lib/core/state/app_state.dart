@@ -1,8 +1,10 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../api/bmp_api.dart';
+import '../notifications/push_notifications.dart';
 import '../storage/cookies.dart';
 import '../utils/json.dart';
 
@@ -135,6 +137,8 @@ class AuthNotifier extends AsyncNotifier<Json?> {
   Future<void> refresh() async => ref.invalidateSelf();
 
   void logout() {
+    // Unregister the push token with the session that owns it, before it goes.
+    unawaited(PushNotifications.instance.unregister(Cookies.get('accessToken')));
     Cookies.remove('accessToken');
     state = const AsyncData(null);
   }
