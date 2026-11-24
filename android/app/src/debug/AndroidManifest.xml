@@ -4,4 +4,7 @@
          to allow setting breakpoints, to provide hot reload, etc.
     -->
     <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- Debug builds only: lets a wired phone reach the local BMP_BE / bmp_fe over
+         http://localhost via `adb reverse`. Release builds stay HTTPS-only. -->
+    <application android:usesCleartextTraffic="true" />
 </manifest>

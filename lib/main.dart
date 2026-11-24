@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'core/app_update/app_update_gate.dart';
+import 'core/notifications/push_notifications.dart';
 import 'core/state/app_state.dart';
 import 'core/storage/cookies.dart';
 import 'core/theme/app_theme.dart';
@@ -14,6 +15,7 @@ import 'router.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Cookies.init();
+  await PushNotifications.instance.init();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(const ProviderScope(child: BmpApp()));
 }
@@ -35,6 +37,14 @@ class _BmpAppState extends ConsumerState<BmpApp> {
   void initState() {
     super.initState();
     ref.listenManual(authProvider, (_, _) => _authChanges.value++);
+    // Notification taps (incl. the one that launched the app) navigate here.
+    PushNotifications.instance.attachRouter(_router);
+    // Registers / refreshes the FCM token for the signed-in user (BMP-16).
+    ref.listenManual(
+      authProvider,
+      (_, next) => PushNotifications.instance.syncWithUser(next.value),
+      fireImmediately: true,
+    );
   }
 
   @override

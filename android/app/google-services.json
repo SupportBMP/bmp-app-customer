@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "369533108582",
+    "project_id": "bmp-customer-application",
+    "storage_bucket": "bmp-customer-application.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:369533108582:android:5dc57d99fc96c663fa48a7",
+        "android_client_info": {
+          "package_name": "com.bookmypooja.bmp_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5l_fvbQHXaJq-So1yFxkDwDlwy_3Q_zQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
