@@ -17,8 +17,13 @@ import 'app_update_status.dart';
 ///
 /// It sits *under* [SplashOverlay], so the check runs while the splash
 /// animates and whatever it shows appears once the splash fades out.
-/// Blocking states are re-checked when the app returns to the foreground
-/// (e.g. after the user comes back from the Play Store).
+///
+/// The check also re-runs every time the app returns to the foreground.
+/// Android usually resumes a backgrounded app instead of cold-starting it, so
+/// a launch-only check would never see a force update / maintenance switched
+/// on in the backend after the app was first opened. Non-blocking re-checks
+/// are throttled by [_recheckInterval]; blocking states always re-check (e.g.
+/// after the user comes back from the Play Store).
 class AppUpdateGate extends StatefulWidget {
   const AppUpdateGate({super.key, required this.child});
   final Widget child;
@@ -28,9 +33,13 @@ class AppUpdateGate extends StatefulWidget {
 }
 
 class _AppUpdateGateState extends State<AppUpdateGate> with WidgetsBindingObserver {
+  /// Minimum gap between foreground re-checks while the app isn't blocked.
+  static const _recheckInterval = Duration(minutes: 1);
+
   AppUpdateStatus? _status;
   bool _softDismissed = false;
   bool _checking = false;
+  DateTime? _lastCheckAt;
 
   bool get _blocked => _status != null && (_status!.maintenance || _status!.forceUpdate);
 
@@ -49,12 +58,17 @@ class _AppUpdateGateState extends State<AppUpdateGate> with WidgetsBindingObserv
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed && _blocked) _check();
+    if (state != AppLifecycleState.resumed) return;
+    final last = _lastCheckAt;
+    final stale = last == null || DateTime.now().difference(last) >= _recheckInterval;
+    if (_blocked || stale) _check();
   }
 
   Future<void> _check() async {
     if (_checking) return;
-    final isRetry = _status != null;
+    _lastCheckAt = DateTime.now();
+    // Only the blocking screens show a spinner, so only they need the delay.
+    final isRetry = _blocked;
     setState(() => _checking = true);
     // On a retry keep the spinner up briefly so it doesn't flash on and off.
     final results = await Future.wait<Object?>([
